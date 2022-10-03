@@ -15,7 +15,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        resultIntent = Intent(this, LoginActivity::class.java)
         init()
     }
 
@@ -33,7 +33,7 @@ class SignUpActivity : AppCompatActivity() {
                             )
                         )
                     }
-                    setResult(RESULT_OK,Intent(this@SignUpActivity, LoginActivity::class.java))
+                    setResult(RESULT_OK,resultIntent)
                     finish()
                 } else {}//Snackbar.make(binding.root, "회원가입이 불가 합니다..", Snackbar.LENGTH_SHORT).show()
             }

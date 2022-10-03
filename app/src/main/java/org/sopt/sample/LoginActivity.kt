@@ -2,7 +2,7 @@ package org.sopt.sample
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -33,19 +33,21 @@ class LoginActivity : AppCompatActivity() {
                     if (it.resultCode == RESULT_OK) {
                         Snackbar.make(binding.root, "회원가입이 완료되었습니다.", Snackbar.LENGTH_SHORT)
                             .show()
-                        userData = if(android.os.Build.VERSION.SDK_INT>=33)
-                            it.data!!.getParcelableExtra("userdata",UserData::class.java)!!
+                        userData = if (android.os.Build.VERSION.SDK_INT >= 33)
+                            it.data!!.getParcelableExtra("userdata", UserData::class.java)!!
                         else
                             it.data!!.getParcelableExtra("userdata")!!
                     }
                 }
 
             btnLogin.setOnClickListener {
-                if(::userData.isInitialized){
+                if (::userData.isInitialized) {
                     if (etId.text.toString() == userData!!.id && etPw.text.toString() == userData!!.pw)
-                        startActivity(Intent(this@LoginActivity, IntroduceActivity::class.java))
+                        Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java)
+                        .apply { putExtra("userdata", userData) })
                 }
-
             }
 
         }
