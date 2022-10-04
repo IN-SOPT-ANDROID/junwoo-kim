@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="userdata"
+            type="org.sopt.sample.data.UserData" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,6 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:text="@{`이름 : ` + userdata.id}"
         tools:text="이름:김준우" />
 
     <TextView
@@ -36,7 +44,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        android:text="@{`MBTI : ` + userdata.mbti}"
         tools:text="MBTI:INFP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+</layout>

@@ -33,7 +33,7 @@ class SignUpActivity : AppCompatActivity() {
                             )
                         )
                     }
-                    setResult(RESULT_OK, intent)
+                    setResult(RESULT_OK,intent)
                     finish()
                 } else {
                     Snackbar.make(binding.root, "회원가입이 불가 합니다..", Snackbar.LENGTH_SHORT).apply {

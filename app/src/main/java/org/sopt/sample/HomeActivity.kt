@@ -22,11 +22,7 @@ class HomeActivity : AppCompatActivity() {
                 intent.getParcelableExtra("userdata", UserData::class.java)!!
             else
                 intent.getParcelableExtra("userdata")!!
-
-        binding.apply {
-            tvName.text = "이름 : ${userData.id} "
-            tvMbti.text = "MBTI : ${userData.mbti}"
-        }
+        binding.userdata = userData
     }
 
 }
