@@ -19,33 +19,33 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var userData: UserData
     private lateinit var authPreferences: SharedPreferences
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         authPreferences = getSharedPreferences("autologin", Activity.MODE_PRIVATE)
-        authCheck()
-        initSetListeners()
+
+        authPreferenceCheck()
+        loginListeners()
+        singUpListeners()
     }
 
-    private fun authCheck() {
+    private fun authPreferenceCheck() {
         if (authPreferences.getString("id", null) != null) {
             userData = UserData(
                 authPreferences.getString("id", null).toString(),
                 authPreferences.getString("pw", null).toString(),
                 authPreferences.getString("mbti", null).toString(),
             )
-            startWithIntent(userData)
+            startLoginActivity(userData)
         }
     }
 
-    private fun initSetListeners() {
+    private fun singUpListeners() {
         binding.apply {
             btnSignUp.setOnClickListener {
                 getResultInfo.launch(Intent(this@LoginActivity, SignUpActivity::class.java))
             }
-
             getResultInfo =
                 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                     if (it.resultCode == RESULT_OK) {
@@ -55,12 +55,16 @@ class LoginActivity : AppCompatActivity() {
                             it.data!!.getParcelableExtra("userdata", UserData::class.java)!!
                         else
                             it.data!!.getParcelableExtra("userdata")!!
-                    }
                 }
+            }
+        }
+    }
 
+    private fun loginListeners() {
+        binding.apply {
             btnLogin.setOnClickListener {
                 if (::userData.isInitialized) {
-                    if (etId.text.toString() == userData!!.id && etPw.text.toString() == userData!!.pw) {
+                    if (etId.text.toString() == userData.id && etPw.text.toString() == userData.pw) {
                         authPreferences.edit().apply {
                             putString("id", userData.id)
                             putString("pw", userData.pw)
@@ -68,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
                         }.apply()
                         Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT)
                             .show()
-                        startWithIntent(userData)
+                        startLoginActivity(userData)
                     }
                 }
             }
@@ -76,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun startWithIntent(userData: UserData) {
+    private fun startLoginActivity(userData: UserData) {
         startActivity(Intent(this@LoginActivity, HomeActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .apply { putExtra("userdata", userData) })

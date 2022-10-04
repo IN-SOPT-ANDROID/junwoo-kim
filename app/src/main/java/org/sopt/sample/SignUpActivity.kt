@@ -3,27 +3,27 @@ package org.sopt.sample
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.data.UserData
 import org.sopt.sample.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private lateinit var resultIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        resultIntent = Intent(this, LoginActivity::class.java)
         init()
     }
 
     private fun init() {
+        val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
         binding.apply {
             btnSignUp.setOnClickListener {
                 if (etId.text.length in 6..10 && etPw.text.length in 8..12) {
-                    resultIntent.apply {
+                    intent.apply {
                         putExtra(
                             "userdata",
                             UserData(
@@ -33,9 +33,13 @@ class SignUpActivity : AppCompatActivity() {
                             )
                         )
                     }
-                    setResult(RESULT_OK,resultIntent)
+                    setResult(RESULT_OK, intent)
                     finish()
-                } else {}//Snackbar.make(binding.root, "회원가입이 불가 합니다..", Snackbar.LENGTH_SHORT).show()
+                } else {
+                    Snackbar.make(binding.root, "회원가입이 불가 합니다..", Snackbar.LENGTH_SHORT).apply {
+                    }.show()
+
+                }
             }
         }
     }
