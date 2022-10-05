@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.INSOPTAndroidPractice" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <style name="Theme.INSOPTAndroidPractice" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,26 +12,54 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
     </style>
 
     <style name="SignUp_EditText" parent="">
-        <item name="android:layout_marginHorizontal">40dp</item>
-        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginHorizontal">@dimen/app_base_margin_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/app_margin_24</item>
     </style>
 
     <style name="SignUp_TextView_title" parent="">
-        <item name="android:layout_marginTop">40dp</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">@style/ExtraBold_TextAppearance</item>
+        <item name="android:layout_marginTop">@dimen/app_margin_32</item>
+        <item name="android:textSize">@dimen/text_font_18</item>
     </style>
 
-    <style name="SignUp_TextView_subtitle." parent="">
-        <item name="android:layout_marginStart">40dp</item>
-        <item name="android:layout_marginTop">32dp</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
+    <style name="SignUp_TextView_subtitle" parent="">
+        <item name="android:textAppearance">@style/Bold_TextAppearance</item>
+        <item name="android:layout_marginStart">@dimen/app_base_margin_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/app_margin_32</item>
+        <item name="android:textSize">@dimen/text_font_20</item>
     </style>
 
+    <style name="Home_TextView" parent="">
+        <item name="android:textAppearance">@style/Bold_TextAppearance</item>
+        <item name="android:textSize">@dimen/text_font_16</item>
+        <item name="android:layout_marginVertical">@dimen/app_margin_12</item>
+    </style>
+
+
+
+    <!-- font family-->
+    <style name="Light_TextAppearance" parent="">
+        <item name="android:fontFamily">@font/nanumgothiclight</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+
+    <style name="Default_TextAppearance" parent="">
+        <item name="android:fontFamily">@font/nanumgothic</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Bold_TextAppearance" parent="">
+        <item name="android:fontFamily">@font/nanumgothicbold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="ExtraBold_TextAppearance" parent="">
+        <item name="android:fontFamily">@font/nanumgothicextrabold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
 
 </resources>

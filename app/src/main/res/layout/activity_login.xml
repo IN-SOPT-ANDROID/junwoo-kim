@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/tv_id"
-        style="@style/SignUp_TextView_subtitle."
+        style="@style/SignUp_TextView_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/id"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/tv_pw"
-        style="@style/SignUp_TextView_subtitle."
+        style="@style/SignUp_TextView_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pw"
@@ -59,9 +59,9 @@
         android:id="@+id/btn_flow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/app_margin_24"
         app:constraint_referenced_ids="btn_login,btn_sign_up"
-        app:flow_horizontalGap="12dp"
+        app:flow_horizontalGap="@dimen/app_margin_12"
         app:flow_horizontalStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
