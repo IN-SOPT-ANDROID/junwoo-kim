@@ -12,5 +12,26 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
     </style>
+
+    <style name="SignUp_EditText" parent="">
+        <item name="android:layout_marginHorizontal">40dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+    </style>
+
+    <style name="SignUp_TextView_title" parent="">
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SignUp_TextView_subtitle." parent="">
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 </resources>

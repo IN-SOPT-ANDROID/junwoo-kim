@@ -3,15 +3,15 @@ package org.sopt.sample
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.sopt.sample.data.UserData
-import org.sopt.sample.databinding.ActivityIntroduceBinding
+import org.sopt.sample.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityIntroduceBinding
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityIntroduceBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         getResult()
     }
