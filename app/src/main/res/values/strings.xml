@@ -11,4 +11,13 @@
     <string name="login">LOGIN</string>
     <string name="sign_up">SIGNUP</string>
     <string name="btn_sign_up">회원가입 완료</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="gallery">Gallery</string>
+    <string name="home_fragment">HomeFragment</string>
+    <string name="search_fragment">SearchFragment</string>
+    <string name="gallery_fragment">GalleryFragment</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
