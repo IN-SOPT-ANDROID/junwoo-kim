@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_base_margin_horizontal">40dp</dimen>
+    <dimen name="app_margin_32">32dp</dimen>
+    <dimen name="app_margin_24">24dp</dimen>
+    <dimen name="app_margin_12">12dp</dimen>
+
+    <dimen name="text_font_20">20sp</dimen>
+    <dimen name="text_font_18">18sp</dimen>
+    <dimen name="text_font_16">16sp</dimen>
+    <dimen name="text_font_14">14sp</dimen>
+    <dimen name="text_font_12">12sp</dimen>
+    <dimen name="text_font_10">10sp</dimen>
+
+</resources>
