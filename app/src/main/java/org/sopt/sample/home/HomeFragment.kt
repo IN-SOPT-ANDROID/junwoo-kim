@@ -29,10 +29,12 @@ class HomeFragment : Fragment() {
         val adapter = SampleAdapter(requireContext())
         adapter.setDataList(
             listOf(
-                RepoData("", "권용민", "OB"),
-                RepoData("", "김준우", "YB"),
-                RepoData("", "김지영", "YB"),
-                RepoData("", "김우남", "YB"),
+                RepoData("","OB","",0),
+                RepoData("", "권용민", "OB",1),
+                RepoData("","YB","",0),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김지영", "YB",1),
+                RepoData("", "김우남", "YB",1),
             )
         )
         binding.rcvHome.adapter = adapter
