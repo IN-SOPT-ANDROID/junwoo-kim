@@ -7,17 +7,17 @@
 
         <variable
             name="userdata"
-            type="org.sopt.sample.model.UserData" />
+            type="org.sopt.sample.presentation.model.UserData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HomeActivity">
+        tools:context=".presentation.home.HomeActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/container_home"
-            android:name="org.sopt.sample.home.HomeFragment"
+            android:name="org.sopt.sample.presentation.home.HomeFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/nav_bottom_home"

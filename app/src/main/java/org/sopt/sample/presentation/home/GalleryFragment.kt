@@ -1,4 +1,4 @@
-package org.sopt.sample.home
+package org.sopt.sample.presentation.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

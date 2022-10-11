@@ -1,11 +1,12 @@
-package org.sopt.sample
+package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import org.sopt.sample.model.UserData
 import org.sopt.sample.databinding.ActivitySignUpBinding
+import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.login.LoginActivity
 
 class SignUpActivity : AppCompatActivity() {
 

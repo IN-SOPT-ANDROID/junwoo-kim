@@ -1,4 +1,4 @@
-package org.sopt.sample.home
+package org.sopt.sample.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
-import org.sopt.sample.home.adapter.SampleAdapter
-import org.sopt.sample.model.RepoData
+import org.sopt.sample.presentation.home.adapter.SampleAdapter
+import org.sopt.sample.presentation.home.model.RepoData
 
 class HomeFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package org.sopt.sample.home.adapter
+package org.sopt.sample.presentation.home.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import org.sopt.sample.databinding.ItemHeaderBinding
 import org.sopt.sample.databinding.ItemHomeBinding
-import org.sopt.sample.model.RepoData
+import org.sopt.sample.presentation.home.model.RepoData
 
 class SampleAdapter(context: Context): RecyclerView.Adapter<ViewHolder>() {
     //class SampleAdapter():RecyclerView.Adapter<SampleViewHolder>() {
@@ -28,7 +28,7 @@ class SampleAdapter(context: Context): RecyclerView.Adapter<ViewHolder>() {
     }
 
     class HeaderViewHolder(private val binding: ItemHeaderBinding):RecyclerView.ViewHolder(binding.root){
-        fun onBind(data:RepoData){
+        fun onBind(data: RepoData){
             binding.tvHeader.text = data.name
         }
     }
@@ -38,7 +38,7 @@ class SampleAdapter(context: Context): RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType){
-            Companion.HEADER ->{
+            HEADER ->{
                 HeaderViewHolder(ItemHeaderBinding.inflate(inflater,parent,false))
             }
             else ->{
@@ -50,10 +50,10 @@ class SampleAdapter(context: Context): RecyclerView.Adapter<ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when(holder.itemViewType){
-            Companion.ITEM ->{
+            ITEM ->{
                 (holder as ItemViewHolder).onBind(repoList[position])
                 }
-            Companion.HEADER ->{
+            HEADER ->{
                 (holder as HeaderViewHolder).onBind(repoList[position])
                 }
             }

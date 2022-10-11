@@ -1,12 +1,10 @@
-package org.sopt.sample
+package org.sopt.sample.presentation.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.sopt.sample.model.UserData
+import org.sopt.sample.R
+import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.databinding.ActivityHomeBinding
-import org.sopt.sample.home.GalleryFragment
-import org.sopt.sample.home.HomeFragment
-import org.sopt.sample.home.SearchFragment
 
 class HomeActivity : AppCompatActivity() {
 
