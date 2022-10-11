@@ -1,4 +1,4 @@
-package org.sopt.sample.presentation.home
+package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,14 +8,10 @@ import android.view.ViewGroup
 import org.sopt.sample.R
 
 
-class GalleryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -23,13 +19,11 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     companion object {
-
         @JvmStatic
-        fun newInstance() = GalleryFragment()
-
+        fun newInstance() = SearchFragment()
     }
 }

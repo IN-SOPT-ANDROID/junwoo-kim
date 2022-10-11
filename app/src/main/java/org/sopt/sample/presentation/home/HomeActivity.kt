@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import org.sopt.sample.R
 import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.databinding.ActivityHomeBinding
+import org.sopt.sample.presentation.home.fragment.GalleryFragment
+import org.sopt.sample.presentation.home.fragment.HomeFragment
+import org.sopt.sample.presentation.home.fragment.SearchFragment
 
 class HomeActivity : AppCompatActivity() {
 
