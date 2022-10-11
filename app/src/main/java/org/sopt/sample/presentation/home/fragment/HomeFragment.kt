@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
 
         fun setScroll(){
-            recyclerView.scrollToPosition(0)
+            recyclerView.smoothScrollToPosition(0)
         }
     }
 
@@ -39,7 +39,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         recyclerView = binding.rcvHome
         val adapter = SampleAdapter(requireContext())
-        adapter.setDataList(
+        recyclerView.adapter = adapter
+        adapter.submitList(
             listOf(
                 RepoData("","OB","",0),
                 RepoData("", "권용민", "OB",1),
@@ -59,7 +60,6 @@ class HomeFragment : Fragment() {
                 RepoData("", "김준우", "YB",1),
             )
         )
-        recyclerView.adapter = adapter
         return binding.root
     }
 
