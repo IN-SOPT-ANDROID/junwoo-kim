@@ -5,13 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.home.adapter.SampleAdapter
 import org.sopt.sample.model.RepoData
 
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    companion object {
+
+        private lateinit var recyclerView : RecyclerView
+
+        @JvmStatic
+        fun newInstance() = HomeFragment()
+
+        fun setScroll(){
+            recyclerView.scrollToPosition(0)
+        }
+    }
 
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
@@ -26,6 +38,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        recyclerView = binding.rcvHome
         val adapter = SampleAdapter(requireContext())
         adapter.setDataList(
             listOf(
@@ -35,15 +48,20 @@ class HomeFragment : Fragment() {
                 RepoData("", "김준우", "YB",1),
                 RepoData("", "김지영", "YB",1),
                 RepoData("", "김우남", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
+                RepoData("", "김준우", "YB",1),
             )
         )
-        binding.rcvHome.adapter = adapter
+        recyclerView.adapter = adapter
         return binding.root
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = HomeFragment()
     }
 
     override fun onDestroyView() {
