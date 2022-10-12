@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -19,8 +20,9 @@ class GitAdapter(
 ) : ListAdapter<GitData, RecyclerView.ViewHolder>(GitDiffUtil) {
     //: RecyclerView.Adapter<ViewHolder>()
     private val inflater by lazy { LayoutInflater.from(context) }
-
+    private lateinit var selectionTracker: SelectionTracker<Long>
     //private var repoList : List<RepoData> = listOf()
+
     init {
         setHasStableIds(true)
     }
@@ -65,7 +67,8 @@ class GitAdapter(
             ITEM -> {
                 with(holder as ItemViewHolder) {
                     binding.setVariable(BR.repodata, getItem(position) as GitData)
-                    binding.root.setOnClickListener { itemClickListener(getItem(position) as GitData) }
+                    binding.root.setOnClickListener { binding.selected = !binding.selected }
+                    selectionTracker?.isSelected(position.toLong())
                 }
                 //(holder as ItemViewHolder).onBind(repoList[position])
             }
@@ -80,6 +83,10 @@ class GitAdapter(
         val item = getItem(position)
         //val item = repoList[position]
         return if (item.viewtype == 0) HEADER else ITEM
+    }
+
+    fun setTracker(selectionTracker: SelectionTracker<Long>) {
+        this.selectionTracker = selectionTracker
     }
 
 //    @SuppressLint("NotifyDataSetChanged")
