@@ -1,19 +1,18 @@
 package org.sopt.sample.presentation.home.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import org.sopt.sample.databinding.ItemHeaderBinding
 import org.sopt.sample.databinding.ItemHomeBinding
-import org.sopt.sample.presentation.home.model.RepoData
+import org.sopt.sample.presentation.home.model.GitData
+import org.sopt.sample.presentation.util.GitDiffUtil
 
-class SampleAdapter(context: Context)
-    : ListAdapter<RepoData,RecyclerView.ViewHolder>(RepoDiffCallBack) {
+class GitAdapter(context: Context)
+    : ListAdapter<GitData,RecyclerView.ViewHolder>(GitDiffUtil) {
     //: RecyclerView.Adapter<ViewHolder>()
     private val inflater by lazy { LayoutInflater.from(context) }
     //private var repoList : List<RepoData> = listOf()
@@ -21,7 +20,7 @@ class SampleAdapter(context: Context)
 
     class ItemViewHolder(private val binding: ItemHomeBinding):RecyclerView.ViewHolder(binding.root)
     {
-        fun onBind(data : RepoData){
+        fun onBind(data : GitData){
             //binding.imageView = data.img
             binding.tv1.text = data.name
             binding.tv2.text = data.des
@@ -29,7 +28,7 @@ class SampleAdapter(context: Context)
     }
 
     class HeaderViewHolder(private val binding: ItemHeaderBinding):RecyclerView.ViewHolder(binding.root){
-        fun onBind(data: RepoData){
+        fun onBind(data: GitData){
             binding.tvHeader.text = data.name
         }
     }
@@ -82,15 +81,5 @@ class SampleAdapter(context: Context)
         const val ITEM = 2
     }
 
-    private object RepoDiffCallBack : DiffUtil.ItemCallback<RepoData>() {
-        override fun areItemsTheSame(oldItem: RepoData, newItem: RepoData): Boolean {
-            return oldItem.name == newItem.name
-        }
-
-        @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: RepoData, newItem: RepoData): Boolean {
-            return oldItem === newItem
-        }
-    }
 
 }
