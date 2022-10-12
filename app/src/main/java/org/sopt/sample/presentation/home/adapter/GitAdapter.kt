@@ -11,25 +11,22 @@ import org.sopt.sample.databinding.ItemHomeBinding
 import org.sopt.sample.presentation.home.model.GitData
 import org.sopt.sample.presentation.util.GitDiffUtil
 
-class GitAdapter(context: Context)
-    : ListAdapter<GitData,RecyclerView.ViewHolder>(GitDiffUtil) {
+class GitAdapter(context: Context) : ListAdapter<GitData, RecyclerView.ViewHolder>(GitDiffUtil) {
     //: RecyclerView.Adapter<ViewHolder>()
     private val inflater by lazy { LayoutInflater.from(context) }
     //private var repoList : List<RepoData> = listOf()
 
 
-    class ItemViewHolder(private val binding: ItemHomeBinding):RecyclerView.ViewHolder(binding.root)
-    {
-        fun onBind(data : GitData){
-            //binding.imageView = data.img
-            binding.tv1.text = data.name
-            binding.tv2.text = data.des
+    class ItemViewHolder(val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root){
+        fun onBind(data: GitData){
+            binding.repodata = data
         }
     }
 
-    class HeaderViewHolder(private val binding: ItemHeaderBinding):RecyclerView.ViewHolder(binding.root){
+
+    class HeaderViewHolder(val binding: ItemHeaderBinding) : RecyclerView.ViewHolder(binding.root){
         fun onBind(data: GitData){
-            binding.tvHeader.text = data.name
+            binding.header = data
         }
     }
 
@@ -37,32 +34,29 @@ class GitAdapter(context: Context)
     //override fun getItemCount() = repoList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType){
-            HEADER ->{
-                HeaderViewHolder(ItemHeaderBinding.inflate(inflater,parent,false))
+        return when (viewType) {
+            HEADER -> {
+                HeaderViewHolder(ItemHeaderBinding.inflate(inflater, parent, false))
             }
-            else ->{
-               ItemViewHolder(ItemHomeBinding.inflate(inflater,parent,false))
+            else -> {
+                ItemViewHolder(ItemHomeBinding.inflate(inflater, parent, false))
             }
         }
 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        when(holder.itemViewType){
-            ITEM ->{
+        when (holder.itemViewType) {
+            ITEM -> {
                 (holder as ItemViewHolder).onBind(getItem(position))
                 //(holder as ItemViewHolder).onBind(repoList[position])
-
             }
-            HEADER ->{
+            HEADER -> {
                 (holder as HeaderViewHolder).onBind(getItem(position))
                 //(holder as HeaderViewHolder).onBind(repoList[position])
-
-            }
             }
         }
-
+    }
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
