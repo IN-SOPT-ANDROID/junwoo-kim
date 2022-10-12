@@ -2,19 +2,17 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivitySignUpBinding
-import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.login.LoginActivity
+import org.sopt.sample.presentation.model.UserData
 
-class SignUpActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivitySignUpBinding
+class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
     }
@@ -34,7 +32,7 @@ class SignUpActivity : AppCompatActivity() {
                             )
                         )
                     }
-                    setResult(RESULT_OK,intent)
+                    setResult(RESULT_OK, intent)
                     finish()
                 } else {
                     Snackbar.make(binding.root, "회원가입이 불가 합니다..", Snackbar.LENGTH_SHORT).apply {
