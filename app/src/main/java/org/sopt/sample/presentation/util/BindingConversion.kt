@@ -10,21 +10,21 @@ import org.sopt.sample.R
 
 @SuppressLint("UseCompatLoadingForDrawables")
 @BindingAdapter("app:textView_touch_gitItem")
-fun textviewtouch(view: TextView, selected:Boolean){
+fun TextView.textviewtouch(selected:Boolean){
     if (selected) {
-        view.typeface = ResourcesCompat.getFont(view.context, R.font.nanumgothicextrabold)
+        typeface = ResourcesCompat.getFont(context, R.font.nanumgothicextrabold)
     } else {
-        view.typeface = ResourcesCompat.getFont(view.context, R.font.nanumgothicbold)
+        typeface = ResourcesCompat.getFont(context, R.font.nanumgothicbold)
     }
 }
 
 @SuppressLint("ResourceAsColor")
 @BindingAdapter("app:layout_touch_gitItem")
-fun layouttouch(view: ConstraintLayout, selected:Boolean){
+fun ConstraintLayout.layouttouch(selected:Boolean){
     if (selected) {
-        view.setBackgroundColor(Color.parseColor("#808080"))
+        setBackgroundColor(Color.parseColor("#808080"))
     } else {
-        view.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        setBackgroundColor(Color.parseColor("#FFFFFF"))
     }
 }
 
