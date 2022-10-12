@@ -6,7 +6,7 @@ import org.sopt.sample.presentation.home.model.GitData
 
 object GitDiffUtil : DiffUtil.ItemCallback<GitData>() {
     override fun areItemsTheSame(oldItem: GitData, newItem: GitData): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.id == newItem.id
     }
 
     @SuppressLint("DiffUtilEquals")
