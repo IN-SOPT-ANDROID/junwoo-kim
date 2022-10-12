@@ -8,12 +8,17 @@
         <variable
             name="repodata"
             type="org.sopt.sample.presentation.home.model.GitData" />
+        <variable
+            name="selected"
+            type="boolean" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_touch_gitItem="@{selected}"
+        >
 
         <ImageView
             android:id="@+id/imageView"
@@ -31,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{repodata.name}"
+            app:textView_touch_gitItem="@{selected}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{repodata.des}"
+            app:textView_touch_gitItem="@{selected}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
