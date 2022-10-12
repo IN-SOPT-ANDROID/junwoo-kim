@@ -3,6 +3,7 @@ package org.sopt.sample.presentation.home.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -15,12 +16,20 @@ class GitAdapter(context: Context) : ListAdapter<GitData, RecyclerView.ViewHolde
     //: RecyclerView.Adapter<ViewHolder>()
     private val inflater by lazy { LayoutInflater.from(context) }
     //private var repoList : List<RepoData> = listOf()
-
+    init {
+        setHasStableIds(true)
+    }
 
     class ItemViewHolder(val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root){
         fun onBind(data: GitData){
             binding.repodata = data
         }
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+            object : ItemDetailsLookup.ItemDetails<Long>() {
+                override fun getPosition(): Int = position
+                override fun getSelectionKey(): Long? = itemId
+            }
+
     }
 
 
@@ -29,7 +38,6 @@ class GitAdapter(context: Context) : ListAdapter<GitData, RecyclerView.ViewHolde
             binding.header = data
         }
     }
-
 
     //override fun getItemCount() = repoList.size
 
@@ -74,6 +82,5 @@ class GitAdapter(context: Context) : ListAdapter<GitData, RecyclerView.ViewHolde
         const val HEADER = 1
         const val ITEM = 2
     }
-
 
 }
