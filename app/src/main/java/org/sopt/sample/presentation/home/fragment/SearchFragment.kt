@@ -1,26 +1,18 @@
 package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import org.sopt.sample.R
+import org.sopt.sample.databinding.FragmentSearchBinding
+import org.sopt.sample.presentation.base.BindingFragment
 
 
-class SearchFragment : Fragment() {
+class SearchFragment : BindingFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
 
     companion object {
         @JvmStatic

@@ -1,16 +1,15 @@
 package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
+import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.GitAdapter
 import org.sopt.sample.presentation.home.model.GitData
 
-class HomeFragment : Fragment() {
+class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     companion object {
 
@@ -24,19 +23,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding: FragmentHomeBinding
-        get() = requireNotNull(_binding) {"${this.id} binding error"}
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.rcvHome
         val adapter = GitAdapter(requireContext())
         recyclerView.adapter = adapter
@@ -64,12 +52,5 @@ class HomeFragment : Fragment() {
                 GitData(20,"", "김준우", "YB",1),
             )
         )
-        return binding.root
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }
