@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.Selection
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -47,13 +48,8 @@ class GitAdapter(
 
 
     class HeaderViewHolder(val binding: ItemHeaderBinding) : RecyclerView.ViewHolder(binding.root)
-//    {
-//        fun onBind(data: GitData) {
-//            binding.header = data
-//        }
-//    }
 
-    //override fun getItemCount() = repoList.size
+    override fun getItemCount() = currentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -92,6 +88,14 @@ class GitAdapter(
         val item = getItem(position)
         //val item = repoList[position]
         return if (item.viewtype == 0) HEADER else ITEM
+    }
+
+    fun removeItem(selection:Selection<Long>){
+        val currentList = currentList.toMutableList()
+        selection.forEach {
+            currentList.removeAt(it.toInt())
+        }
+        submitList(currentList)
     }
 
     fun setTracker(selectionTracker: SelectionTracker<Long>) {

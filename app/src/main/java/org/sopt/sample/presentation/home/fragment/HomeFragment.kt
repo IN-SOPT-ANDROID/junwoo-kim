@@ -2,7 +2,6 @@ package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
@@ -191,10 +190,16 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         GitData(20, "", "김준우", "YB", 1),
     )
     private lateinit var gitadapter: GitAdapter
+    private lateinit var tracker: SelectionTracker<Long>
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
+        binding.floatingBtnDelete.setOnClickListener {
+            gitadapter.removeItem(tracker.selection)
+            tracker.clearSelection()
+        }
 
     }
 
@@ -207,37 +212,35 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun setSelectionTracker() {
-        val tracker = SelectionTracker.Builder<Long>(
+        tracker = SelectionTracker.Builder<Long>(
             "gitSelection",
             recyclerView,
             StableIdKeyProvider(recyclerView),
             GitDetailsLookUp(recyclerView),
             StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            object : SelectionTracker.SelectionPredicate<Long>() {
-                override fun canSetStateForKey(key: Long, nextState: Boolean):
-                        Boolean {
-                    return true
-                }
-
-                override fun canSetStateAtPosition(position: Int, nextState:
-                Boolean): Boolean {
-                    return true
-                }
-
-                override fun canSelectMultiple(): Boolean {
-                    return true
-                }
-            }).build()
-        tracker.addObserver(
-            object : SelectionTracker.SelectionObserver<Long>() {
-                override fun onSelectionChanged() {
-                    super.onSelectionChanged()
-                    val items = tracker.selection.size()
-                    binding.enabled = items >= 1
-                }
+        ).withSelectionPredicate(object : SelectionTracker.SelectionPredicate<Long>() {
+            override fun canSetStateForKey(key: Long, nextState: Boolean): Boolean {
+                return true
             }
-        )
+
+            override fun canSetStateAtPosition(
+                position: Int, nextState: Boolean
+            ): Boolean {
+                return true
+            }
+
+            override fun canSelectMultiple(): Boolean {
+                return true
+            }
+        }).build()
+        tracker.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
+            override fun onSelectionChanged() {
+                super.onSelectionChanged()
+                val items = tracker.selection.size()
+                binding.enabled = items >= 1 // 선택된 아이템이 1개 이상일 경우 floating button 활성화
+            }
+        })
         gitadapter.setTracker(tracker)
     }
+
 }
