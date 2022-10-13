@@ -21,6 +21,7 @@
         android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/app_margin_12"
         app:layout_touch_gitItem="@{selected}">
 
         <ImageView
@@ -29,6 +30,7 @@
             android:layout_height="50dp"
             android:contentDescription="@string/introduce"
             android:src="@drawable/ic_github"
+            android:layout_marginStart="@dimen/app_margin_12"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,8 +39,9 @@
         <TextView
             android:id="@+id/tv_reponame"
             style="@style/Bold_TextAppearance"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@{repodata.name}"
             android:textSize="@dimen/text_font_20"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,9 +53,10 @@
         <TextView
             android:id="@+id/tv_owner"
             style="@style/Bold_TextAppearance"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{repodata.des}"
+            android:gravity="center"
             android:textSize="@dimen/text_font_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

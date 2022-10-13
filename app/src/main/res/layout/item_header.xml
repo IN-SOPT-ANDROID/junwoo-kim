@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/app_margin_12">
+        android:paddingBottom="@dimen/app_margin_12">
 
         <TextView
             android:id="@+id/tv_header"
@@ -25,6 +25,7 @@
             android:textSize="@dimen/text_font_26"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/home" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

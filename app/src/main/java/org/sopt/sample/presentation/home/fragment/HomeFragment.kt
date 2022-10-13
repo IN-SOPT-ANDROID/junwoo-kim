@@ -1,17 +1,21 @@
 package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
+import org.json.JSONObject
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.GitAdapter
 import org.sopt.sample.presentation.home.adapter.GitDetailsLookUp
+import org.sopt.sample.presentation.home.model.FakeGitItem
 import org.sopt.sample.presentation.home.model.GitData
+import timber.log.Timber
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
@@ -28,7 +32,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private val gitList = listOf(
-        GitData(1, "", "OB", "", 0),
+        GitData(1, "", "Header", "", 0),
         GitData(2, "", "레포1", "IslandOfDream", 1),
         GitData(3, "", "레포2", "IslandOfDream", 1),
         GitData(4, "", "레포3", "IslandOfDream", 1),
@@ -155,6 +159,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
+        getJsonData("fake_repo_list.json")
         binding.floatingBtnDelete.setOnClickListener {
             gitadapter.removeItem(tracker.selection)
             tracker.clearSelection()
@@ -200,5 +205,22 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             }
         })
         gitadapter.setTracker(tracker)
+    }
+
+    private fun getJsonData(filename: String): List<FakeGitItem>? {
+        val assetManager = resources.assets
+        val inputStream= assetManager.open(filename)
+        val jsonString = inputStream.bufferedReader().use { it.readText() }
+        val jObject = JSONObject(jsonString)
+        val jArray = jObject.getJSONArray("data")
+        val result = jArray
+//        try {
+//            val result = Json.decodeFromString<List<FakeGitItem>>(assetManager.open(filename))
+//            Log.e("hi",result.toString())
+//            return result
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+        return null
     }
 }
