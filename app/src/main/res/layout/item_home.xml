@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="repodata"
             type="org.sopt.sample.presentation.home.model.GitData" />
+
         <variable
             name="selected"
             type="boolean" />
@@ -18,43 +21,56 @@
         android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_touch_gitItem="@{selected}"
-        >
+        app:layout_touch_gitItem="@{selected}">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imv_profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_photo"
+            android:contentDescription="@string/introduce"
+            android:src="@drawable/ic_github"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
-            android:id="@+id/tv_1"
+            android:id="@+id/tv_reponame"
             style="@style/Bold_TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{repodata.name}"
-            app:textView_touch_gitItem="@{selected}"
+            android:textSize="@dimen/text_font_20"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:textView_touch_gitItem="@{selected}"
             tools:text="@string/search" />
 
         <TextView
-            android:id="@+id/tv_2"
+            android:id="@+id/tv_owner"
             style="@style/Bold_TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{repodata.des}"
-            app:textView_touch_gitItem="@{selected}"
+            android:textSize="@dimen/text_font_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/tv_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:textView_touch_gitItem="@{selected}"
             tools:text="@string/home" />
+
+        <ImageView
+            android:id="@+id/imv_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/app_margin_24"
+            android:contentDescription="@string/check"
+            android:src="@drawable/ic_check"
+            android:visibility="@{selected ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
