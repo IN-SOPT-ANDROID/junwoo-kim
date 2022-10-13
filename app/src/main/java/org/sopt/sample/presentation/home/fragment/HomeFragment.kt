@@ -1,13 +1,14 @@
 package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
-import org.json.JSONObject
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromJsonElement
+import org.json.JSONArray
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.presentation.base.BindingFragment
@@ -27,152 +28,37 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         fun newInstance() = HomeFragment()
 
         fun setScroll() {
-            recyclerView.smoothScrollToPosition(0)
+            recyclerView.scrollToPosition(0)
+            //recyclerView.smoothScrollToPosition(0)
         }
     }
 
-    private val gitList = listOf(
-        GitData(1, "", "Header", "", 0),
-        GitData(2, "", "레포1", "IslandOfDream", 1),
-        GitData(3, "", "레포2", "IslandOfDream", 1),
-        GitData(4, "", "레포3", "IslandOfDream", 1),
-        GitData(5, "", "레포4", "IslandOfDream", 1),
-        GitData(6, "", "레포5", "IslandOfDream", 1),
-        GitData(7, "", "레포6", "IslandOfDream", 1),
-        GitData(8, "", "레포7", "IslandOfDream", 1),
-        GitData(9, "", "레포8", "IslandOfDream", 1),
-        GitData(10, "", "레포9", "IslandOfDream", 1),
-        GitData(11, "", "레포10", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-        GitData(7, "", "더미레포", "IslandOfDream", 1),
-        GitData(8, "", "더미레포", "IslandOfDream", 1),
-        GitData(9, "", "더미레포", "IslandOfDream", 1),
-        GitData(10, "", "더미레포", "IslandOfDream", 1),
-        GitData(11, "", "더미레포", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-        GitData(7, "", "더미레포", "IslandOfDream", 1),
-        GitData(8, "", "더미레포", "IslandOfDream", 1),
-        GitData(9, "", "더미레포", "IslandOfDream", 1),
-        GitData(10, "", "더미레포", "IslandOfDream", 1),
-        GitData(11, "", "더미레포", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-        GitData(4, "", "더미레포", "IslandOfDream", 1),
-        GitData(7, "", "더미레포", "IslandOfDream", 1),
-        GitData(8, "", "더미레포", "IslandOfDream", 1),
-        GitData(9, "", "더미레포", "IslandOfDream", 1),
-        GitData(10, "", "더미레포", "IslandOfDream", 1),
-        GitData(11, "", "더미레포", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-        GitData(7, "", "더미레포", "IslandOfDream", 1),
-        GitData(8, "", "더미레포", "IslandOfDream", 1),
-        GitData(9, "", "더미레포", "IslandOfDream", 1),
-        GitData(10, "", "더미레포", "IslandOfDream", 1),
-        GitData(11, "", "더미레포", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-        GitData(7, "", "더미레포", "IslandOfDream", 1),
-        GitData(8, "", "더미레포", "IslandOfDream", 1),
-        GitData(9, "", "더미레포", "IslandOfDream", 1),
-        GitData(10, "", "더미레포", "IslandOfDream", 1),
-        GitData(11, "", "더미레포", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-        GitData(7, "", "더미레포", "IslandOfDream", 1),
-        GitData(8, "", "더미레포", "IslandOfDream", 1),
-        GitData(9, "", "더미레포", "IslandOfDream", 1),
-        GitData(10, "", "더미레포", "IslandOfDream", 1),
-        GitData(11, "", "더미레포", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-        GitData(7, "", "더미레포", "IslandOfDream", 1),
-        GitData(8, "", "더미레포", "IslandOfDream", 1),
-        GitData(9, "", "더미레포", "IslandOfDream", 1),
-        GitData(10, "", "더미레포", "IslandOfDream", 1),
-        GitData(11, "", "더미레포", "IslandOfDream", 1),
-        GitData(12, "", "더미레포", "IslandOfDream", 1),
-        GitData(13, "", "더미레포", "IslandOfDream", 1),
-        GitData(14, "", "더미레포", "IslandOfDream", 1),
-        GitData(15, "", "더미레포", "IslandOfDream", 1),
-        GitData(16, "", "더미레포", "IslandOfDream", 1),
-        GitData(17, "", "더미레포", "IslandOfDream", 1),
-        GitData(18, "", "더미레포", "IslandOfDream", 1),
-        GitData(19, "", "더미레포", "IslandOfDream", 1),
-        GitData(20, "", "더미레포", "IslandOfDream", 1),
-    ) // position 정보 기억 테스트를 위한 더미데이터
-    private lateinit var gitadapter: GitAdapter
+    private val dummyGitList = mutableListOf(
+        GitData(0,"", "Header", "", 0), // 헤더타입 지정
+    )
+
+    private lateinit var gitAdapter: GitAdapter
     private lateinit var tracker: SelectionTracker<Long>
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
-        getJsonData("fake_repo_list.json")
         binding.floatingBtnDelete.setOnClickListener {
-            gitadapter.removeItem(tracker.selection)
+            gitAdapter.removeItem(tracker.selection)
             tracker.clearSelection()
         }
-
     }
 
     private fun initRecycler() {
+        repeat(100) { // selection을 통한 key 저장 작동을 확인하기 위해 뷰홀더가 재사용될 정도로 데이터 추가
+            dummyGitList.add(it + 1, GitData(it+1, "", "더미 레포${it + 1}", "Jun-wooKim"))
+        }
         recyclerView = binding.rcvHome
-        gitadapter = GitAdapter(requireContext()) { }
-        recyclerView.adapter = gitadapter
+        gitAdapter = GitAdapter(requireContext()) { }
+        recyclerView.adapter = gitAdapter
         setSelectionTracker()
-        gitadapter.submitList(gitList.toList())
+        gitAdapter.submitList(dummyGitList.toList())
     }
 
     private fun setSelectionTracker() {
@@ -204,23 +90,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 binding.enabled = items >= 1 // 선택된 아이템이 1개 이상일 경우 floating button 활성화
             }
         })
-        gitadapter.setTracker(tracker)
+        gitAdapter.setTracker(tracker)
     }
 
-    private fun getJsonData(filename: String): List<FakeGitItem>? {
-        val assetManager = resources.assets
-        val inputStream= assetManager.open(filename)
-        val jsonString = inputStream.bufferedReader().use { it.readText() }
-        val jObject = JSONObject(jsonString)
-        val jArray = jObject.getJSONArray("data")
-        val result = jArray
-//        try {
-//            val result = Json.decodeFromString<List<FakeGitItem>>(assetManager.open(filename))
-//            Log.e("hi",result.toString())
-//            return result
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-        return null
-    }
 }
