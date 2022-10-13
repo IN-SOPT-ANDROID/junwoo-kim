@@ -16,8 +16,7 @@ class GitDetailsLookUp(private val recyclerView: RecyclerView) : ItemDetailsLook
             {
                 return null
             } else {
-                (recyclerView.getChildViewHolder(view) as GitAdapter.ItemViewHolder)
-                    .getItemDetails()
+                return (recyclerView.getChildViewHolder(view) as GitAdapter.ItemViewHolder).getItemDetails()
             }
         }
         return null

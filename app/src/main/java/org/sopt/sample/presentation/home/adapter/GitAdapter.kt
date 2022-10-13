@@ -1,6 +1,7 @@
 package org.sopt.sample.presentation.home.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.selection.ItemDetailsLookup
@@ -13,6 +14,7 @@ import org.sopt.sample.databinding.ItemHeaderBinding
 import org.sopt.sample.databinding.ItemHomeBinding
 import org.sopt.sample.presentation.home.model.GitData
 import org.sopt.sample.presentation.util.GitDiffUtil
+import timber.log.Timber
 
 class GitAdapter(
     context: Context,
@@ -27,17 +29,20 @@ class GitAdapter(
         setHasStableIds(true)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     class ItemViewHolder(val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
-//        fun onBind(data: GitData) {
-//            binding.repodata = data
-//        }
+        fun onBind(selected: Boolean = false){
+            binding.selected = selected
+        }
 
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
-                override fun getPosition(): Int = position
-                override fun getSelectionKey(): Long? = itemId
+                override fun getPosition(): Int = absoluteAdapterPosition
+                override fun getSelectionKey(): Long = itemId
             }
-
     }
 
 
@@ -67,8 +72,12 @@ class GitAdapter(
             ITEM -> {
                 with(holder as ItemViewHolder) {
                     binding.setVariable(BR.repodata, getItem(position) as GitData)
-                    binding.root.setOnClickListener { binding.selected = !binding.selected }
-                    selectionTracker?.isSelected(position.toLong())
+                    binding.root.setOnClickListener {
+                        selectionTracker.select(position.toLong())
+                    }
+                    // 코드 위치 조심!!!!!! setOnClickListener에서 select후 빠져 나온후에 isSelected
+                    // 매우 중요!!!!! 여기에 두시간씀 ㅠㅠ
+                    binding.selected = selectionTracker.isSelected(position.toLong())
                 }
                 //(holder as ItemViewHolder).onBind(repoList[position])
             }
@@ -96,8 +105,8 @@ class GitAdapter(
 //    }
 
     companion object {
-        const val HEADER = 1
-        const val ITEM = 2
+        const val HEADER = 0
+        const val ITEM = 1
     }
 
 }
