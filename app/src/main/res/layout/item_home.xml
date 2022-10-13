@@ -66,8 +66,8 @@
 
         <ImageView
             android:id="@+id/imv_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="@dimen/app_margin_24"
             android:contentDescription="@string/check"
             android:src="@drawable/ic_check"
