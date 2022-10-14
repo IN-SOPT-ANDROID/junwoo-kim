@@ -69,7 +69,9 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
                 val items = tracker.selection.size()
-                binding.enabled = items >= 1 // 선택된 아이템이 1개 이상일 경우 floating button 활성화
+                if(items == 0) binding.enabled = false
+                else binding.enabled = items >= 1 // 선택된 아이템이 1개 이상일 경우 floating button 활성화
+
             }
         }))
 
