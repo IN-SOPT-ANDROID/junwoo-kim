@@ -33,8 +33,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
     }
 
-    private val dummyGitList = mutableListOf(
-        GitData(0,"", "Header", "", 0), // 헤더타입 지정
+    private val gitList = mutableListOf(
+        GitData(0, "", "Header", "", 0), // 헤더타입 지정
     )
 
     private lateinit var gitAdapter: GitAdapter
@@ -43,6 +43,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getJsonData()
         initRecycler()
         binding.floatingBtnDelete.setOnClickListener {
             gitAdapter.removeItem(tracker.selection)
@@ -51,14 +52,14 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun initRecycler() {
-        repeat(100) { // selection을 통한 key 저장 작동을 확인하기 위해 뷰홀더가 재사용될 정도로 데이터 추가
-            dummyGitList.add(it + 1, GitData(it+1, "", "더미 레포${it + 1}", "Jun-wooKim"))
+        repeat(100) { // selection을 통한 key 저장 작동을 확인하기 위해 뷰홀더가 재사용될 정도로 더미 데이터 추가
+            gitList.add(GitData(it + 1, "", "더미 레포${it + 1}", "Jun-wooKim"))
         }
         recyclerView = binding.rcvHome
         gitAdapter = GitAdapter(requireContext()) { }
         recyclerView.adapter = gitAdapter
         setSelectionTracker()
-        gitAdapter.submitList(dummyGitList.toList())
+        gitAdapter.submitList(gitList.toList())
     }
 
     private fun setSelectionTracker() {
@@ -93,4 +94,22 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         gitAdapter.setTracker(tracker)
     }
 
+    private fun getJsonData() {
+        val assetManager = resources.assets
+        val jsonArray = JSONArray(
+            assetManager.open("fake_repo_list.json").bufferedReader().use { it.readText() })
+
+        repeat(jsonArray.length()) {
+            val element = Json.parseToJsonElement(jsonArray.get(it).toString())
+            val fakeGitData = Json.decodeFromJsonElement<FakeGitItem>(element)
+            gitList.add(
+                GitData(
+                    fakeGitData.id!!,
+                    fakeGitData.owner!!.avatarUrl!!,
+                    fakeGitData.name!!,
+                    fakeGitData.owner.login!!
+                )
+            )
+        }
+    }
 }
