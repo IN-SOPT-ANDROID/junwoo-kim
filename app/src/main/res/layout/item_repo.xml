@@ -28,42 +28,51 @@
             android:id="@+id/imv_profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:profile_load="@{repodata.img}"
+            android:layout_marginStart="@dimen/app_margin_12"
             android:contentDescription="@string/introduce"
             android:src="@drawable/ic_github"
-            android:layout_marginStart="@dimen/app_margin_12"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:profile_load="@{repodata.img}" />
 
 
         <TextView
             android:id="@+id/tv_reponame"
             style="@style/Bold_TextAppearance"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@{repodata.name}"
             android:textSize="@dimen/text_font_20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_text"
+            app:layout_constraintStart_toEndOf="@+id/imv_profile"
             app:layout_constraintTop_toTopOf="parent"
             app:textView_touch_gitItem="@{selected}"
             tools:text="@string/search" />
 
         <TextView
             android:id="@+id/tv_owner"
+
             style="@style/Bold_TextAppearance"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{repodata.des}"
             android:gravity="center"
+            android:text="@{repodata.des}"
             android:textSize="@dimen/text_font_20"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_text"
+            app:layout_constraintStart_toEndOf="@+id/imv_profile"
             app:textView_touch_gitItem="@{selected}"
             tools:text="@string/home" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="64dp" />
 
         <ImageView
             android:id="@+id/imv_check"

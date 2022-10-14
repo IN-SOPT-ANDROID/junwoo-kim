@@ -6,17 +6,13 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromJsonElement
-import org.json.JSONArray
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
+import org.sopt.sample.domain.FakeGitRepository
 import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.GitAdapter
 import org.sopt.sample.presentation.home.adapter.GitDetailsLookUp
-import org.sopt.sample.presentation.home.model.FakeGitItem
 import org.sopt.sample.presentation.home.model.GitData
-import timber.log.Timber
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
@@ -33,33 +29,41 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
     }
 
-    private val gitList = mutableListOf(
-        GitData(0, "", "Header", "", 0), // 헤더타입 지정
+    private val repoList = mutableListOf(
+        GitData(0, "", "Repos from local json", "", 0), // 헤더타입 지정
     )
 
     private lateinit var gitAdapter: GitAdapter
     private lateinit var tracker: SelectionTracker<Long>
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getJsonData()
+        initSetData()
         initRecycler()
-        binding.floatingBtnDelete.setOnClickListener {
-            gitAdapter.removeItem(tracker.selection)
-            tracker.clearSelection()
+
+    }
+
+    private fun initSetData() {
+        with(repoList) {
+            addAll(FakeGitRepository(requireContext()).getJsonRepoData()) // json 파일로부터 데이터를 받아옴
+            add(GitData(1, "", "DummyRepos", "", 0))
+            repeat(100) { // selection을 통한 key 저장 작동을 확인하기 위해 뷰홀더가 재사용될 정도로 더미 데이터 추가
+                add(GitData(it + 2, "", "더미 레포${it + 1}", "Jun-wooKim"))
+            }
         }
     }
 
     private fun initRecycler() {
-        repeat(100) { // selection을 통한 key 저장 작동을 확인하기 위해 뷰홀더가 재사용될 정도로 더미 데이터 추가
-            gitList.add(GitData(it + 1, "", "더미 레포${it + 1}", "Jun-wooKim"))
-        }
         recyclerView = binding.rcvHome
         gitAdapter = GitAdapter(requireContext()) { }
         recyclerView.adapter = gitAdapter
         setSelectionTracker()
-        gitAdapter.submitList(gitList.toList())
+        gitAdapter.submitList(repoList.toList())
+
+        binding.floatingBtnDelete.setOnClickListener {
+            gitAdapter.removeItem(tracker.selection)
+            tracker.clearSelection()
+        }
     }
 
     private fun setSelectionTracker() {
@@ -94,22 +98,4 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         gitAdapter.setTracker(tracker)
     }
 
-    private fun getJsonData() {
-        val assetManager = resources.assets
-        val jsonArray = JSONArray(
-            assetManager.open("fake_repo_list.json").bufferedReader().use { it.readText() })
-
-        repeat(jsonArray.length()) {
-            val element = Json.parseToJsonElement(jsonArray.get(it).toString())
-            val fakeGitData = Json.decodeFromJsonElement<FakeGitItem>(element)
-            gitList.add(
-                GitData(
-                    fakeGitData.id!!,
-                    fakeGitData.owner!!.avatarUrl!!,
-                    fakeGitData.name!!,
-                    fakeGitData.owner.login!!
-                )
-            )
-        }
-    }
 }
