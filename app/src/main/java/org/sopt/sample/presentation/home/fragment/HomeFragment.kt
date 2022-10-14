@@ -3,15 +3,13 @@ package org.sopt.sample.presentation.home.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
-import org.sopt.sample.domain.FakeGitRepository
+import org.sopt.sample.domain.fakeGitRepository
 import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.GitAdapter
-import org.sopt.sample.presentation.home.adapter.GitDetailsLookUp
+import org.sopt.sample.presentation.home.adapter.setSelectionTracker
 import org.sopt.sample.presentation.home.model.GitData
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
@@ -40,12 +38,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         super.onViewCreated(view, savedInstanceState)
         initSetData()
         initRecycler()
-
     }
 
     private fun initSetData() {
         with(repoList) {
-            addAll(FakeGitRepository(requireContext()).getJsonRepoData()) // json 파일로부터 데이터를 받아옴
+            addAll(requireContext().fakeGitRepository()) // json 파일로부터 데이터를 받아옴
             add(GitData(1, "", "DummyRepos", "", 0))
             repeat(100) { // selection을 통한 key 저장 작동을 확인하기 위해 뷰홀더가 재사용될 정도로 더미 데이터 추가
                 add(GitData(it + 2, "", "더미 레포${it + 1}", "Jun-wooKim"))
@@ -57,7 +54,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         recyclerView = binding.rcvHome
         gitAdapter = GitAdapter(requireContext()) { }
         recyclerView.adapter = gitAdapter
-        setSelectionTracker()
+        addTrackerObserver()
         gitAdapter.submitList(repoList.toList())
 
         binding.floatingBtnDelete.setOnClickListener {
@@ -66,35 +63,16 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
     }
 
-    private fun setSelectionTracker() {
-        tracker = SelectionTracker.Builder<Long>(
-            "gitSelection",
-            recyclerView,
-            StableIdKeyProvider(recyclerView),
-            GitDetailsLookUp(recyclerView),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(object : SelectionTracker.SelectionPredicate<Long>() {
-            override fun canSetStateForKey(key: Long, nextState: Boolean): Boolean {
-                return true
-            }
-
-            override fun canSetStateAtPosition(
-                position: Int, nextState: Boolean
-            ): Boolean {
-                return true
-            }
-
-            override fun canSelectMultiple(): Boolean {
-                return true
-            }
-        }).build()
-        tracker.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
+    private fun addTrackerObserver() {
+        tracker = setSelectionTracker("gitSelectionTracker", recyclerView)
+        tracker.addObserver((object : SelectionTracker.SelectionObserver<Long>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
                 val items = tracker.selection.size()
                 binding.enabled = items >= 1 // 선택된 아이템이 1개 이상일 경우 floating button 활성화
             }
-        })
+        }))
+
         gitAdapter.setTracker(tracker)
     }
 
