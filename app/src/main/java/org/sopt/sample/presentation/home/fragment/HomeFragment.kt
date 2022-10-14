@@ -6,7 +6,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
-import org.sopt.sample.domain.fakeGitRepository
+import org.sopt.sample.domain.getJsonData
 import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.GitAdapter
 import org.sopt.sample.presentation.home.adapter.setSelectionTracker
@@ -42,7 +42,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun initSetData() {
         with(repoList) {
-            addAll(requireContext().fakeGitRepository()) // json 파일로부터 데이터를 받아옴
+            addAll(requireContext().getJsonData()) // json 파일로부터 데이터를 받아옴
             add(GitData(1, "", "DummyRepos", "", 0))
             repeat(100) { // selection을 통한 key 저장 작동을 확인하기 위해 뷰홀더가 재사용될 정도로 더미 데이터 추가
                 add(GitData(it + 2, "", "더미 레포${it + 1}", "Jun-wooKim"))

@@ -23,7 +23,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun init() {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.container_home)
         if (currentFragment == null) {
-            transcationFragment(HomeFragment.newInstance())
+            transactionFragment(HomeFragment.newInstance())
         }
     }
 
@@ -31,33 +31,33 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         binding.navBottomHome.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
-                    transcationFragment(HomeFragment.newInstance())
+                    transactionFragment(HomeFragment.newInstance())
                 }
                 R.id.nav_gallery -> {
-                    transcationFragment(GalleryFragment.newInstance())
+                    transactionFragment(GalleryFragment.newInstance())
                 }
                 R.id.nav_search -> {
-                    transcationFragment(SearchFragment.newInstance())
+                    transactionFragment(SearchFragment.newInstance())
                 }
             }
             return@setOnItemSelectedListener true
         }
 
-        binding.navBottomHome.setOnItemReselectedListener { 
+        binding.navBottomHome.setOnItemReselectedListener {
             when (it.itemId) {
                 R.id.nav_home -> { //현재 프래그먼트가 home이면 리싸이클러뷰 스크롤 이동
                     HomeFragment.setScroll()
                     return@setOnItemReselectedListener
                 }
                 else -> { // 다른프래그먼트였다면 홈 프래그먼트로 이동
-                    transcationFragment(HomeFragment.newInstance())
+                    transactionFragment(HomeFragment.newInstance())
                 }
             }
         }
     }
 
 
-    private fun transcationFragment(fragment: Fragment): Boolean {
+    private fun transactionFragment(fragment: Fragment): Boolean {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container_home, fragment)
             .commit()

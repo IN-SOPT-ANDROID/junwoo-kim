@@ -11,12 +11,12 @@ class GitDetailsLookUp(private val recyclerView: RecyclerView) : ItemDetailsLook
     override fun getItemDetails(motionEvent: MotionEvent): ItemDetails<Long>? {
         val view: View? = recyclerView!!.findChildViewUnder(motionEvent.x, motionEvent.y)
         if (view != null) {
-            if (recyclerView.getChildViewHolder(view) is GitAdapter.HeaderViewHolder)
+            return if (recyclerView.getChildViewHolder(view) is GitAdapter.HeaderViewHolder)
             // Header 타입은 터치 이벤트가 없기때문에 넣지 않음
             {
-                return null
+                null
             } else {
-                return (recyclerView.getChildViewHolder(view) as GitAdapter.ItemViewHolder).getItemDetails()
+                (recyclerView.getChildViewHolder(view) as GitAdapter.ItemViewHolder).getItemDetails()
             }
         }
         return null
