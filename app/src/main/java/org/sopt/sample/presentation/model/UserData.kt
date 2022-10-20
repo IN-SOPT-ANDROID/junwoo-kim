@@ -1,4 +1,4 @@
-package org.sopt.sample.model
+package org.sopt.sample.presentation.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

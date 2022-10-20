@@ -1,4 +1,4 @@
-package org.sopt.sample
+package org.sopt.sample.presentation.login
 
 import android.app.Activity
 import android.content.Intent
@@ -7,21 +7,22 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import org.sopt.sample.model.UserData
+import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivityLoginBinding
+import org.sopt.sample.presentation.base.BindingActivity
+import org.sopt.sample.presentation.home.HomeActivity
+import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.signup.SignUpActivity
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
-    private lateinit var binding: ActivityLoginBinding
     private lateinit var getResultInfo: ActivityResultLauncher<Intent>
     private lateinit var userData: UserData
     private lateinit var authPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         authPreferences = getSharedPreferences("autologin", Activity.MODE_PRIVATE)
 
@@ -52,12 +53,13 @@ class LoginActivity : AppCompatActivity() {
                     if (it.resultCode == RESULT_OK) {
                         Snackbar.make(binding.root, "회원가입이 완료되었습니다.", Snackbar.LENGTH_SHORT)
                             .show()
-                        userData = if (android.os.Build.VERSION.SDK_INT >= 33) //getParcelableExtra 함수 deprecated 대처
-                            it.data!!.getParcelableExtra("userdata", UserData::class.java)!!
-                        else
-                            it.data!!.getParcelableExtra("userdata")!!
+                        userData =
+                            if (android.os.Build.VERSION.SDK_INT >= 33) //getParcelableExtra 함수 deprecated 대처
+                                it.data!!.getParcelableExtra("userdata", UserData::class.java)!!
+                            else
+                                it.data!!.getParcelableExtra("userdata")!!
+                    }
                 }
-            }
         }
     }
 
@@ -65,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
             btnLogin.setOnClickListener {
                 if (::userData.isInitialized) {
-                    if (etId.text.toString() == userData.id && etPw.text.toString() == userData.pw) { 
+                    if (etId.text.toString() == userData.id && etPw.text.toString() == userData.pw) {
                         //회원가입 정보와 입력한 정보가 맞을 경우 Home화면 이동 및 SharedPreference 편집
                         authPreferences.edit().apply {
                             putString("id", userData.id)

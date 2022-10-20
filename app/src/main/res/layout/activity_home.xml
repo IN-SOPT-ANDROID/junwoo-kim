@@ -1,53 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="userdata"
-            type="org.sopt.sample.model.UserData" />
+            type="org.sopt.sample.presentation.model.UserData" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HomeActivity">
+        tools:context=".presentation.home.HomeActivity">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container_home"
+            android:name="org.sopt.sample.presentation.home.fragment.HomeFragment"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="150dp"
-            android:layout_marginVertical="100dp"
-            android:contentDescription="@string/introduce"
-            android:src="@drawable/drawable_junwookim"
-            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toTopOf="@+id/nav_bottom_home"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout="@layout/fragment_home" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            style="@style/Home_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{`이름 : ` + userdata.id}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:text="이름 : 김준우" />
-
-        <TextView
-            android:id="@+id/tv_mbti"
-            style="@style/Home_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{`MBTI : ` + userdata.mbti}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            tools:text="MBTI : INFP" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_bottom_home"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_nav_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
