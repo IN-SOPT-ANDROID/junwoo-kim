@@ -75,6 +75,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             else
                 intent.getParcelableExtra("userdata")!!
         binding.userdata = userData // 데이터바인딩
+        homeViewModel.setUserData(userData) // 뷰모델에서의 Data set
     }
 
 }
