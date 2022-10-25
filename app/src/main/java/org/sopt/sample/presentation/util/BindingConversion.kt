@@ -10,7 +10,6 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import org.sopt.sample.R
 
-@SuppressLint("UseCompatLoadingForDrawables")
 @BindingAdapter("app:textView_touch_gitItem")
 fun TextView.textviewtouch(selected: Boolean) {
     if (selected) {
