@@ -1,6 +1,7 @@
 package org.sopt.sample.presentation.home
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivityHomeBinding
@@ -9,8 +10,11 @@ import org.sopt.sample.presentation.home.fragment.GalleryFragment
 import org.sopt.sample.presentation.home.fragment.HomeFragment
 import org.sopt.sample.presentation.home.fragment.SearchFragment
 import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.signup.HomeViewModel
 
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +75,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             else
                 intent.getParcelableExtra("userdata")!!
         binding.userdata = userData // 데이터바인딩
+        homeViewModel.setUserData(userData) // 뷰모델에서의 Data set
     }
 
 }

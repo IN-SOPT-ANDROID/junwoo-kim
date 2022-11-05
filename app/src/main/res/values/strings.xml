@@ -15,6 +15,8 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="gallery">Gallery</string>
+    <string name="viewmodel_id">뷰모델로부터 넘어온 ID : %s</string>
+    <string name="viewmodel_mbti">뷰모델로부터 넘어온 MBTI : %s</string>
     <string name="home_fragment">HomeFragment</string>
     <string name="search_fragment">SearchFragment</string>
     <string name="gallery_fragment">GalleryFragment</string>
