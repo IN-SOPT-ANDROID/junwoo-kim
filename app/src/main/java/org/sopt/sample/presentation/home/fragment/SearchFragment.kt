@@ -9,13 +9,14 @@ import org.sopt.sample.presentation.base.BindingFragment
 
 class SearchFragment : BindingFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
+
+    companion object {
+        fun newInstance() = SearchFragment()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = SearchFragment()
-    }
 }

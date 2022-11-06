@@ -18,7 +18,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
         private lateinit var recyclerView: RecyclerView
 
-        @JvmStatic
         fun newInstance() = HomeFragment()
 
         fun setScroll() {

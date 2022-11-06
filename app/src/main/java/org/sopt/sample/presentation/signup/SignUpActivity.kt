@@ -3,7 +3,6 @@ package org.sopt.sample.presentation.signup
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar

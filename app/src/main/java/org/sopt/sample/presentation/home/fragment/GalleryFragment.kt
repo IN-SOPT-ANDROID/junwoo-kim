@@ -12,10 +12,7 @@ import org.sopt.sample.presentation.signup.HomeViewModel
 class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
     companion object {
-
-        @JvmStatic
         fun newInstance() = GalleryFragment()
-
     }
 
     private val homeViewModel: HomeViewModel by activityViewModels()

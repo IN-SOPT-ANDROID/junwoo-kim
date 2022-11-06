@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".presentation.signup.SignUpActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="false" >
         </activity>
         <activity
