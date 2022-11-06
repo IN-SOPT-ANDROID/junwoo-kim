@@ -9,17 +9,25 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
+import org.sopt.sample.application.ApiFactory
+import org.sopt.sample.data.model.dto.RequestLoginDTO
+import org.sopt.sample.data.model.dto.ResponseLoginDTO
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.presentation.signup.SignUpActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private lateinit var getResultInfo: ActivityResultLauncher<Intent>
     private lateinit var userData: UserData
     private lateinit var authPreferences: SharedPreferences
+
+    private val authService by lazy { ApiFactory.loginService() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,19 +74,54 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     private fun loginListener() { // login button listener
         binding.apply {
             btnLogin.setOnClickListener {
-                if (::userData.isInitialized) {
-                    if (etId.text.toString() == userData.id && etPw.text.toString() == userData.pw) {
-                        //회원가입 정보와 입력한 정보가 맞을 경우 Home화면 이동 및 SharedPreference 편집
-                        authPreferences.edit().apply {
-                            putString("id", userData.id)
-                            putString("pw", userData.pw)
-                            putString("mbti", userData.mbti)
-                        }.apply()
-                        Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT)
-                            .show()
-                        startHomeActivity(userData)
+                authService.login(
+                    RequestLoginDTO(
+                        binding.etId.text.toString()
+                        ,binding.etPw.text.toString()
+                    )
+                ).enqueue(//해당 비동기 코드는 대부분 다른 동기코드보다 늦게 실행된다.
+                    object: Callback<ResponseLoginDTO> {//Callback은 Retrofit에 있는애로 사용해야함
+                        override fun onResponse(
+                        call: Call<ResponseLoginDTO>,
+                        response: Response<ResponseLoginDTO>
+                        ) {//로그인 성공 기준 함수
+                            if(response.isSuccessful){
+                            //코드가 2xx의 경우 response.isSuecessful이 작동
+                                val result = response.body()
+                                Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT)
+                                    .show()
+                            }else{
+                                // 2xx제외 4xx 5xx등 응답코드가 다른 경우에 작동하는 애들
+                                //즉,통신은 잘 이루어지지만 응답코드가 정상이 아닌경우
+                                Toast.makeText(this@LoginActivity, "로그인에 살패했습니다.", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseLoginDTO>, t: Throwable) {
+                            //로그인 실패 기준 함수
+                            //얘는 서버 통신이 아예 끊길떄의 경우
+                            Toast.makeText(this@LoginActivity, "서버통신에 살패했습니다.", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
-                }
+                )
+
+
+
+//                if (::userData.isInitialized) {
+//                    if (etId.text.toString() == userData.id && etPw.text.toString() == userData.pw) {
+//                        //회원가입 정보와 입력한 정보가 맞을 경우 Home화면 이동 및 SharedPreference 편집
+//                        authPreferences.edit().apply {
+//                            putString("id", userData.id)
+//                            putString("pw", userData.pw)
+//                            putString("mbti", userData.mbti)
+//                        }.apply()
+//                        Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT)
+//                            .show()
+//                        startHomeActivity(userData)
+//                    }
+//                }
             }
         }
     }
