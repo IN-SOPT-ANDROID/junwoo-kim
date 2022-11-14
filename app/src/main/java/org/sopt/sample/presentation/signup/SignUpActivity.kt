@@ -7,10 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
+import org.sopt.sample.application.ApiFactory
+import org.sopt.sample.data.model.dto.RequestSingUpDTO
+import org.sopt.sample.data.model.dto.ResponseSignUpDTO
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.login.LoginActivity
 import org.sopt.sample.presentation.model.UserData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
@@ -21,8 +28,39 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.enabled = false
+        singUp()
         withLiveData()
         addObserve()
+    }
+
+    private fun singUp(){ // 비동기로 회원가입 하는 함수
+        binding.btnSignUp.setOnClickListener {
+            ApiFactory.loginService()
+                .signup(
+                    RequestSingUpDTO(
+                        binding.etId.text.toString(),
+                        binding.etPw.text.toString(),
+                        binding.etName.text.toString()
+                    )
+                ).enqueue(
+                    object : Callback<ResponseSignUpDTO> {
+                        override fun onResponse(
+                            call: Call<ResponseSignUpDTO>,
+                            response: Response<ResponseSignUpDTO>
+                        ) {
+                            if (response.isSuccessful) {
+                                Timber.e(response.body().toString())
+                            } else {
+                                Timber.e(response.body().toString())
+                            }
+                        }
+                        override fun onFailure(call: Call<ResponseSignUpDTO>, t: Throwable) {
+                            Timber.e(t)
+                        }
+                    }
+                )
+            finish()
+        }
     }
 
     private fun withLiveData() {
@@ -59,7 +97,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
                             UserData(
                                 etId.text.toString(),
                                 etPw.text.toString(),
-                                etMbti.text.toString()
+                                etName.text.toString()
                             )
                         )
                     }
