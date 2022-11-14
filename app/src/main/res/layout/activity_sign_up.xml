@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="enabled"
             type="boolean" />
@@ -64,23 +65,23 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_pw" />
 
         <TextView
-            android:id="@+id/tv_mbti"
+            android:id="@+id/tv_name"
             style="@style/SignUp_TextView_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mbti"
+            android:text="@string/name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_pw" />
 
         <EditText
-            android:id="@+id/et_mbti"
+            android:id="@+id/et_name"
             style="@style/SignUp_EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_hint_mbti"
+            android:hint="@string/et_hint_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_mbti" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
 
         <Button
@@ -88,13 +89,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/app_base_margin_horizontal"
+            android:layout_marginTop="@dimen/app_margin_24"
             android:background="@drawable/selector_rectangle_gray_black"
             android:enabled="@{enabled}"
-            android:layout_marginTop="@dimen/app_margin_24"
             android:text="@string/btn_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_mbti" />
+            app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
