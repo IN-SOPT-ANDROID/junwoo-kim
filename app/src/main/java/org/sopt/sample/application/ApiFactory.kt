@@ -3,12 +3,15 @@ package org.sopt.sample.application
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import org.sopt.sample.application.Util.Constant.APPLICATION_JOSN
+import org.sopt.sample.application.Util.Constant.REQRES_BASE_URL
+import org.sopt.sample.application.Util.Constant.SOPT_BAST_URL
 import retrofit2.Retrofit
 
 object ApiFactory {
     private val loginRetrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("http://3.39.169.52:3000/")
+            .baseUrl(SOPT_BAST_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
@@ -17,15 +20,15 @@ object ApiFactory {
         loginRetrofit.create(AuthService::class.java)
     }
 
-    private val requresRetrofit by lazy {
+    private val reqresRetrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://reqres.in/")
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .baseUrl(REQRES_BASE_URL)
+            .addConverterFactory(Json.asConverterFactory(APPLICATION_JOSN.toMediaType()))
             .build()
     }
 
-    val requeresService: ReqresApi by lazy {
-        requresRetrofit.create(ReqresApi::class.java)
+    val reqresService: ReqresApi by lazy {
+        reqresRetrofit.create(ReqresApi::class.java)
     }
 
 //    inline fun <reified T> create(): T = loginRetrofit.create<T>(T::class.java)
