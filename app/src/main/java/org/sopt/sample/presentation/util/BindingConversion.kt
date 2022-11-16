@@ -45,3 +45,13 @@ fun ImageView.loadprofile(url: String) {
             .into(this)
     }
 }
+
+@BindingAdapter("app:reqres_profile_load")
+fun ImageView.loadreqresprofile(url: String) {
+        Glide.with(context)
+            .load(url)
+            .error(R.drawable.ic_image_not_supported)
+            .into(this)
+
+}
+
