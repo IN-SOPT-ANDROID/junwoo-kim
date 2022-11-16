@@ -5,12 +5,18 @@ import android.view.View
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.sample.R
+import org.sopt.sample.application.ApiFactory
+import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.domain.getJsonData
 import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.GitAdapter
 import org.sopt.sample.presentation.home.adapter.setSelectionTracker
 import org.sopt.sample.presentation.home.model.GitData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
@@ -33,12 +39,33 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     private lateinit var gitAdapter: GitAdapter
     private lateinit var tracker: SelectionTracker<Long>
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initSetData()
-        initRecycler()
+        loadData()
     }
 
+
+    private fun loadData() {
+        ApiFactory.reqresService.getList().enqueue(
+            object : Callback<ResponseReqresListDTO>{
+                override fun onResponse(
+                    call: Call<ResponseReqresListDTO>,
+                    response: Response<ResponseReqresListDTO>
+                ) {
+                    Timber.e(response.toString())
+                    Timber.e(response.body().toString())
+                }
+
+                override fun onFailure(call: Call<ResponseReqresListDTO>, t: Throwable) {
+                    throw t
+                }
+            }
+        )
+    }
+
+
+    // 이하 항목은 Seminar3까지만 사용했던 함수들
     private fun initSetData() {
         with(repoList) {
             addAll(requireContext().getJsonData()) // json 파일로부터 데이터를 받아옴
@@ -68,7 +95,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
                 val items = tracker.selection.size()
-                if(items == 0) binding.enabled = false
+                if (items == 0) binding.enabled = false
                 else binding.enabled = items >= 1 // 선택된 아이템이 1개 이상일 경우 floating button 활성화
 
             }

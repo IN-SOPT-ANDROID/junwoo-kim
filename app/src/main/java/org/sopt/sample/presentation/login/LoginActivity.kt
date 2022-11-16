@@ -94,6 +94,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
+                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java)
+                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)) //이전 Activity들이 백스택에 남지 않도록 설정
                             } else {
                                 // 2xx제외 4xx 5xx등 응답코드가 다른 경우에 작동하는 애들
                                 //즉,통신은 잘 이루어지지만 응답코드가 정상이 아닌경우
