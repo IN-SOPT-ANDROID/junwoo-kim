@@ -11,6 +11,7 @@ import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.domain.getJsonData
 import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.GitAdapter
+import org.sopt.sample.presentation.home.adapter.ReqresListAdapter
 import org.sopt.sample.presentation.home.adapter.setSelectionTracker
 import org.sopt.sample.presentation.home.model.GitData
 import retrofit2.Call
@@ -36,25 +37,34 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         GitData(0, "", "Repos from local json", "", 0), // 헤더타입 지정
     )
 
+    private var reqresList = listOf<ResponseReqresListDTO.Data>()
+
     private lateinit var gitAdapter: GitAdapter
     private lateinit var tracker: SelectionTracker<Long>
+    private lateinit var reqresListAdapter: ReqresListAdapter
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        reqresListAdapter = ReqresListAdapter(requireContext())
+        binding.rcvHome.adapter = reqresListAdapter
         loadData()
+
     }
 
 
     private fun loadData() {
         ApiFactory.reqresService.getList().enqueue(
-            object : Callback<ResponseReqresListDTO>{
+            object : Callback<ResponseReqresListDTO> {
                 override fun onResponse(
                     call: Call<ResponseReqresListDTO>,
                     response: Response<ResponseReqresListDTO>
                 ) {
                     Timber.e(response.toString())
                     Timber.e(response.body().toString())
+                    reqresList =
+                        response.body()!!.data!!.toList() as List<ResponseReqresListDTO.Data>
+                    reqresListAdapter.submitList(response.body()!!.data!!.toList())
                 }
 
                 override fun onFailure(call: Call<ResponseReqresListDTO>, t: Throwable) {
