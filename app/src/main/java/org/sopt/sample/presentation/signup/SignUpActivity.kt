@@ -33,9 +33,9 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         addObserve()
     }
 
-    private fun singUp(){ // 비동기로 회원가입 하는 함수
+    private fun singUp() { // 비동기로 회원가입 하는 함수
         binding.btnSignUp.setOnClickListener {
-            ApiFactory.loginService()
+            ApiFactory.loginService
                 .signup(
                     RequestSingUpDTO(
                         binding.etId.text.toString(),
@@ -54,6 +54,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
                                 Timber.e(response.body().toString())
                             }
                         }
+
                         override fun onFailure(call: Call<ResponseSignUpDTO>, t: Throwable) {
                             Timber.e(t)
                         }

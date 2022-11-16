@@ -27,7 +27,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     private lateinit var userData: UserData
     private lateinit var authPreferences: SharedPreferences
 
-    private val authService by lazy { ApiFactory.loginService() }
+    private val authService by lazy { ApiFactory.loginService }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,24 +76,32 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             btnLogin.setOnClickListener {
                 authService.login(
                     RequestLoginDTO(
-                        binding.etId.text.toString()
-                        ,binding.etPw.text.toString()
+                        binding.etId.text.toString(), binding.etPw.text.toString()
                     )
                 ).enqueue(//해당 비동기 코드는 대부분 다른 동기코드보다 늦게 실행된다.
-                    object: Callback<ResponseLoginDTO> {//Callback은 Retrofit에 있는애로 사용해야함
+                    object : Callback<ResponseLoginDTO> {
+                        //Callback은 Retrofit에 있는애로 사용해야함
                         override fun onResponse(
-                        call: Call<ResponseLoginDTO>,
-                        response: Response<ResponseLoginDTO>
+                            call: Call<ResponseLoginDTO>,
+                            response: Response<ResponseLoginDTO>
                         ) {//로그인 성공 기준 함수
-                            if(response.isSuccessful){
-                            //코드가 2xx의 경우 response.isSuecessful이 작동
+                            if (response.isSuccessful) {
+                                //코드가 2xx의 경우 response.isSuecessful이 작동
                                 val result = response.body()
-                                Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "로그인에 성공했습니다.",
+                                    Toast.LENGTH_SHORT
+                                )
                                     .show()
-                            }else{
+                            } else {
                                 // 2xx제외 4xx 5xx등 응답코드가 다른 경우에 작동하는 애들
                                 //즉,통신은 잘 이루어지지만 응답코드가 정상이 아닌경우
-                                Toast.makeText(this@LoginActivity, "로그인에 살패했습니다.", Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "로그인에 살패했습니다.",
+                                    Toast.LENGTH_SHORT
+                                )
                                     .show()
                             }
                         }
@@ -106,7 +114,6 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
                         }
                     }
                 )
-
 
 
 //                if (::userData.isInitialized) {
