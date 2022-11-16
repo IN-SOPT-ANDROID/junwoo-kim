@@ -14,4 +14,7 @@
     <dimen name="text_font_12">12sp</dimen>
     <dimen name="text_font_10">10sp</dimen>
 
+    <dimen name="sub_base_4">4dp</dimen>
+    <dimen name="sub_base_140">140dp</dimen>
+
 </resources>
