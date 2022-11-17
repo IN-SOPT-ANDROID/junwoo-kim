@@ -6,7 +6,7 @@ import androidx.fragment.app.activityViewModels
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentGalleryBinding
 import org.sopt.sample.presentation.base.BindingFragment
-import org.sopt.sample.presentation.signup.HomeViewModel
+import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
 
 
 class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {

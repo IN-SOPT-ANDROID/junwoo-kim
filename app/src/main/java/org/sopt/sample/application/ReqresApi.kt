@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface ReqresApi { // 서비스 부분도 suspend여야 의미가 있다
     @GET("api/users?page=2")
-    suspend fun getList(): Response<ResponseReqresListDTO>
+    suspend fun getReqresList(): Response<ResponseReqresListDTO>
 }

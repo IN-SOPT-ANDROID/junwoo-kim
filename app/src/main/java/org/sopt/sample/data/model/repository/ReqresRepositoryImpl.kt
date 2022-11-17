@@ -6,6 +6,6 @@ import retrofit2.Response
 
 class ReqresRepositoryImpl : ReqresRepository {
     override suspend fun getList(): Response<ResponseReqresListDTO> {
-        return ApiFactory.reqresService.getList()
+        return ApiFactory.reqresService.getReqresList()
     }
 }

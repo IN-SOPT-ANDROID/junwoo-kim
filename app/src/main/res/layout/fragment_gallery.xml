@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="org.sopt.sample.presentation.signup.HomeViewModel" />
+            type="org.sopt.sample.presentation.home.viewmodel.HomeViewModel" />
 
     </data>
 
