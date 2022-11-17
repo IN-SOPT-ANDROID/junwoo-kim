@@ -2,10 +2,10 @@ package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.sample.R
-import org.sopt.sample.application.ApiFactory
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.domain.getJsonData
@@ -14,10 +14,7 @@ import org.sopt.sample.presentation.home.adapter.GitAdapter
 import org.sopt.sample.presentation.home.adapter.ReqresListAdapter
 import org.sopt.sample.presentation.home.adapter.setSelectionTracker
 import org.sopt.sample.presentation.home.model.GitData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
+import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
@@ -38,6 +35,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     )
 
     private var reqresList = listOf<ResponseReqresListDTO.Data>()
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     private lateinit var gitAdapter: GitAdapter
     private lateinit var tracker: SelectionTracker<Long>
@@ -48,31 +46,43 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         super.onViewCreated(view, savedInstanceState)
         reqresListAdapter = ReqresListAdapter(requireContext())
         binding.rcvHome.adapter = reqresListAdapter
-        loadData()
-
-    }
+        binding.lifecycleOwner = this
 
 
-    private fun loadData() {
-        ApiFactory.reqresService.getList().enqueue(
-            object : Callback<ResponseReqresListDTO> {
-                override fun onResponse(
-                    call: Call<ResponseReqresListDTO>,
-                    response: Response<ResponseReqresListDTO>
-                ) {
-                    Timber.e(response.toString())
-                    Timber.e(response.body().toString())
-                    reqresList =
-                        response.body()!!.data!!.toList() as List<ResponseReqresListDTO.Data>
-                    reqresListAdapter.submitList(response.body()!!.data!!.toList())
-                }
+        //reqresListAdapter.submitList(homeViewModel.getReqresList()?.data)
 
-                override fun onFailure(call: Call<ResponseReqresListDTO>, t: Throwable) {
-                    throw t
-                }
+
+        homeViewModel.reqresList.observe(viewLifecycleOwner){
+            if(it != null){
+                reqresListAdapter.submitList(it)
             }
-        )
+        }
+
+        //loadData()
+
     }
+
+
+//    private fun loadData() { // Coroutine 안쓰는 경우
+//        ApiFactory.reqresService.getList().enqueue(
+//            object : Callback<ResponseReqresListDTO> {
+//                override fun onResponse(
+//                    call: Call<ResponseReqresListDTO>,
+//                    response: Response<ResponseReqresListDTO>
+//                ) {
+//                    Timber.e(response.toString())
+//                    Timber.e(response.body().toString())
+//                    reqresList =
+//                        response.body()!!.data!!.toList() as List<ResponseReqresListDTO.Data>
+//                    reqresListAdapter.submitList(response.body()!!.data!!.toList())
+//                }
+//
+//                override fun onFailure(call: Call<ResponseReqresListDTO>, t: Throwable) {
+//                    throw t
+//                }
+//            }
+//        )
+//    }
 
 
     // 이하 항목은 Seminar3까지만 사용했던 함수들
