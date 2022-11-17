@@ -10,7 +10,7 @@ import org.sopt.sample.presentation.home.fragment.GalleryFragment
 import org.sopt.sample.presentation.home.fragment.HomeFragment
 import org.sopt.sample.presentation.home.fragment.SearchFragment
 import org.sopt.sample.presentation.model.UserData
-import org.sopt.sample.presentation.signup.HomeViewModel
+import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
 
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -19,7 +19,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        //getResult()
+        //getResult() seminar 3까지만 사용
         init()
         setBottomNav()
     }
@@ -47,17 +47,17 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             return@setOnItemSelectedListener true
         }
 
-        binding.navBottomHome.setOnItemReselectedListener {
-            when (it.itemId) {
-                R.id.nav_home -> { //현재 프래그먼트가 home이면 리싸이클러뷰 스크롤 이동
-                    HomeFragment.setScroll()
-                    return@setOnItemReselectedListener
-                }
-                else -> { // 다른프래그먼트였다면 홈 프래그먼트로 이동
-                    transactionFragment(HomeFragment.newInstance())
-                }
-            }
-        }
+//        binding.navBottomHome.setOnItemReselectedListener {
+//            when (it.itemId) {
+//                R.id.nav_home -> { //현재 프래그먼트가 home이면 리싸이클러뷰 스크롤 이동
+//                    HomeFragment.setScroll()
+//                    return@setOnItemReselectedListener
+//                }
+//                else -> { // 다른프래그먼트였다면 홈 프래그먼트로 이동
+//                    transactionFragment(HomeFragment.newInstance())
+//                }
+//            }
+//        }
     }
 
 
