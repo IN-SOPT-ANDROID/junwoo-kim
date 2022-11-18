@@ -2,10 +2,13 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import org.sopt.sample.R
 import org.sopt.sample.application.ApiFactory
 import org.sopt.sample.data.model.dto.RequestSingUpDTO
@@ -14,6 +17,7 @@ import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.login.LoginActivity
 import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.util.makeToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,33 +38,52 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
     }
 
     private fun singUp() { // 비동기로 회원가입 하는 함수
+        // 별도 뷰모델을 만들지 않은 이유는 해당 비동기 동작으로 인해서
+        // View에 영향을 미치는 행동은 없기떄문에 다음과 같이 lifecyclescope로만 동작하게끔 해주었습니다.
         binding.btnSignUp.setOnClickListener {
-            ApiFactory.loginService
-                .signup(
-                    RequestSingUpDTO(
+          lifecycleScope.launch{
+              val response = ApiFactory.loginService.signup(
+                                      RequestSingUpDTO(
                         binding.etId.text.toString(),
                         binding.etPw.text.toString(),
                         binding.etName.text.toString()
                     )
-                ).enqueue(
-                    object : Callback<ResponseSignUpDTO> {
-                        override fun onResponse(
-                            call: Call<ResponseSignUpDTO>,
-                            response: Response<ResponseSignUpDTO>
-                        ) {
-                            if (response.isSuccessful) {
-                                Timber.e(response.body().toString())
-                            } else {
-                                Timber.e(response.body().toString())
-                            }
-                        }
+              )
+              if(response.isSuccessful){
+                  finish()
+              }else{
+                  binding.root.makeToast("서버통신오류!")
+                Timber.e(response.code().toString())
+              }
 
-                        override fun onFailure(call: Call<ResponseSignUpDTO>, t: Throwable) {
-                            Timber.e(t)
-                        }
-                    }
-                )
-            finish()
+          }
+
+//            ApiFactory.loginService
+//                .signup(
+//                    RequestSingUpDTO(
+//                        binding.etId.text.toString(),
+//                        binding.etPw.text.toString(),
+//                        binding.etName.text.toString()
+//                    )
+//                ).enqueue(
+//                    object : Callback<ResponseSignUpDTO> {
+//                        override fun onResponse(
+//                            call: Call<ResponseSignUpDTO>,
+//                            response: Response<ResponseSignUpDTO>
+//                        ) {
+//                            if (response.isSuccessful) {
+//                                Timber.e(response.body().toString())
+//                            } else {
+//                                Timber.e(response.body().toString())
+//                            }
+//                        }
+//
+//                        override fun onFailure(call: Call<ResponseSignUpDTO>, t: Throwable) {
+//                            Timber.e(t)
+//                        }
+//                    }
+//                )
+
         }
     }
 
