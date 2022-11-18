@@ -46,24 +46,17 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         super.onViewCreated(view, savedInstanceState)
         reqresListAdapter = ReqresListAdapter(requireContext())
         binding.rcvHome.adapter = reqresListAdapter
-        binding.lifecycleOwner = this
-
+        binding.lifecycleOwner = viewLifecycleOwner
 
         //reqresListAdapter.submitList(homeViewModel.getReqresList()?.data)
-
-
-        homeViewModel.reqresList.observe(viewLifecycleOwner){
-            if(it != null){
+        homeViewModel.reqresList.observe(viewLifecycleOwner) {
+            if (it != null) {
                 reqresListAdapter.submitList(it)
             }
         }
-
         //loadData()
-
     }
-
-
-//    private fun loadData() { // Coroutine 안쓰는 경우
+//    private fun loadData() { //TODO Semiar4 필수과제 추후 삭제 예정
 //        ApiFactory.reqresService.getList().enqueue(
 //            object : Callback<ResponseReqresListDTO> {
 //                override fun onResponse(

@@ -3,55 +3,38 @@ package org.sopt.sample.presentation.signup
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import org.sopt.sample.R
-import org.sopt.sample.application.ApiFactory
-import org.sopt.sample.data.model.dto.RequestSingUpDTO
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.login.LoginActivity
 import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel
-import org.sopt.sample.presentation.util.makeToast
-import org.sopt.sample.presentation.util.setOnSingleClickListener
-import timber.log.Timber
+import org.sopt.sample.presentation.util.makeSnackbar
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
 
-    private val signUpViewModel:SingUpViewModel by viewModels()
+    private val signUpViewModel: SingUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.lifecycleOwner = this
         binding.viewmodel = signUpViewModel
-        singUp()
-
+        addObserve()
     }
 
-    private fun singUp() { // 비동기로 회원가입 하는 함수
-        // 별도 뷰모델에서 해주지 않은 이유는 해당 비동기 동작으로 인해서
-        // View에 영향을 미치는 행동은 없기떄문에 다음과 같이 lifecyclescope로만 동작하게끔 해주었습니다.
-        binding.btnSignUp.setOnSingleClickListener {
-            lifecycleScope.launch {
-                val response = ApiFactory.loginService.signup(
-                    RequestSingUpDTO(
-                        binding.etId.text.toString(),
-                        binding.etPw.text.toString(),
-                        binding.etName.text.toString()
-                    )
-                )
-                if (response.isSuccessful) {
-                    finish()
-                } else {
-                    binding.root.makeToast("서버통신오류!")
-                }
-            }
+    private fun addObserve() { //button 이 enabled되고 그 이후 click되면 finish
+        signUpViewModel.success.observe(this) {
+            if (it) finish()
+            else binding.root.makeSnackbar("서버통신실패!")
+        }
+    }
 
-//            ApiFactory.loginService //TODO 세미나4 필수과제 추후 삭제
+    private fun addListener() {
+//        binding.btnSignUp.setOnSingleClickListener { //TODO 세미나4 필수과제 추후 삭제
+//            ApiFactory.loginService
 //                .signup(
 //                    RequestSingUpDTO(
 //                        binding.etId.text.toString(),
@@ -76,8 +59,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 //                        }
 //                    }
 //                )
-
-        }
+//     }
     }
 
 //    private fun withLiveData() { //TODO 팟장님 코드리뷰 해주신거 처럼 최대한 viewmodel에서 로직 처리 해줌 삭제예정

@@ -74,8 +74,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         binding.apply {
             btnLogin.setOnSingleClickListener {
                 // 비동기로 로그인 하는 함수
-                // 별도 뷰모델을 만들지 않은 이유는 해당 비동기 동작으로 인해서
-                // View에 영향을 미치는 행동은 없기떄문에 다음과 같이 lifecyclescope로만 동작하게끔 해주었습니다.
+                // mvvm관점으로 본다면 view를 어쨋든 가지고 있기때문에 뷰모델에서 동작하게끔 해주어야 한다고 생각하지만
+                // 액티비티단에서 lifecyclescope 동작을 한번 해보려고 다음과 같이 작성해봤습니다!!
                 lifecycleScope.launch {
                     val response = authService.login(
                         RequestLoginDTO(
