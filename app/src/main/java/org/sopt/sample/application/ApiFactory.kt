@@ -6,7 +6,7 @@ import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import org.sopt.sample.application.Util.Constant.APPLICATION_JOSN
+import org.sopt.sample.application.Util.Constant.APPLICATION_JSON
 import org.sopt.sample.application.Util.Constant.REQRES_BASE_URL
 import org.sopt.sample.application.Util.Constant.SOPT_BAST_URL
 import retrofit2.Retrofit
@@ -37,7 +37,7 @@ object ApiFactory {
         Retrofit.Builder()
             .baseUrl(REQRES_BASE_URL)
             .client(provideOkHttpClient(AppInterceptor()))
-            .addConverterFactory(Json.asConverterFactory(APPLICATION_JOSN.toMediaType()))
+            .addConverterFactory(Json.asConverterFactory(APPLICATION_JSON.toMediaType()))
             .build()
     }
 
