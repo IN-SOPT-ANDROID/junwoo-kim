@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,9 +10,7 @@
             type="org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -75,16 +75,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_pw" />
 
+
         <EditText
             android:id="@+id/et_name"
             style="@style/SignUp_EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:hint="@string/et_hint_name"
+            android:onTextChanged="@{viewmodel::onNameTextChanged}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
-
 
         <Button
             android:id="@+id/btn_sign_up"
@@ -93,7 +95,8 @@
             android:layout_marginHorizontal="@dimen/app_base_margin_horizontal"
             android:layout_marginTop="@dimen/app_margin_24"
             android:background="@drawable/selector_rectangle_gray_black"
-            android:enabled="@{viewmodel.activationId==true &amp;&amp; viewmodel.activationPw==true ? true : false}"
+            android:enabled="@{viewmodel.activationId==true &amp;&amp; viewmodel.activationPw==true &amp;&amp; viewmodel.activationName ? true : false}"
+            android:onClick="@{()->viewmodel.onPostSingUp()}"
             android:text="@string/btn_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
