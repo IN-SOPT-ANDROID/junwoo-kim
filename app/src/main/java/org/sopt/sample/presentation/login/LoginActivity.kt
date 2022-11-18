@@ -4,22 +4,21 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import org.sopt.sample.R
 import org.sopt.sample.application.ApiFactory
 import org.sopt.sample.data.model.dto.RequestLoginDTO
-import org.sopt.sample.data.model.dto.ResponseLoginDTO
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.presentation.signup.SignUpActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.sopt.sample.presentation.util.makeSnackbar
+import org.sopt.sample.presentation.util.setOnSingleClickListener
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
@@ -73,52 +72,72 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     private fun loginListener() { // login button listener
         binding.apply {
-            btnLogin.setOnClickListener {
-                authService.login(
-                    RequestLoginDTO(
-                        binding.etId.text.toString(), binding.etPw.text.toString()
+            btnLogin.setOnSingleClickListener {
+                // 비동기로 로그인 하는 함수
+                // 별도 뷰모델을 만들지 않은 이유는 해당 비동기 동작으로 인해서
+                // View에 영향을 미치는 행동은 없기떄문에 다음과 같이 lifecyclescope로만 동작하게끔 해주었습니다.
+                lifecycleScope.launch {
+                    val response = authService.login(
+                        RequestLoginDTO(
+                            binding.etId.text.toString(), binding.etPw.text.toString()
+                        )
                     )
-                ).enqueue(//해당 비동기 코드는 대부분 다른 동기코드보다 늦게 실행된다.
-                    object : Callback<ResponseLoginDTO> {
-                        //Callback은 Retrofit에 있는애로 사용해야함
-                        override fun onResponse(
-                            call: Call<ResponseLoginDTO>,
-                            response: Response<ResponseLoginDTO>
-                        ) {//로그인 성공 기준 함수
-                            if (response.isSuccessful) {
-                                //코드가 2xx의 경우 response.isSuecessful이 작동
-                                val result = response.body()
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "로그인에 성공했습니다.",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java)
-                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)) //이전 Activity들이 백스택에 남지 않도록 설정
-                            } else {
-                                // 2xx제외 4xx 5xx등 응답코드가 다른 경우에 작동하는 애들
-                                //즉,통신은 잘 이루어지지만 응답코드가 정상이 아닌경우
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "로그인에 살패했습니다.",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-                        }
-
-                        override fun onFailure(call: Call<ResponseLoginDTO>, t: Throwable) {
-                            //로그인 실패 기준 함수
-                            //얘는 서버 통신이 아예 끊길떄의 경우
-                            Toast.makeText(this@LoginActivity, "서버통신에 살패했습니다.", Toast.LENGTH_SHORT)
-                                .show()
-                        }
+                    if (response.isSuccessful) {
+                        startActivity(
+                            Intent(this@LoginActivity, HomeActivity::class.java)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        ) //이전 Activity들이 백스택에 남지 않도록 설정
+                    } else {
+                        binding.root.makeSnackbar("로그인에 실패하였습니다.")
                     }
-                )
+                }
 
 
-//                if (::userData.isInitialized) {
+//                authService.login( //TODO 세미나4 필수과제 추후 삭제
+//                    RequestLoginDTO(
+//                        binding.etId.text.toString(), binding.etPw.text.toString()
+//                    )
+//                ).enqueue(//해당 비동기 코드는 대부분 다른 동기코드보다 늦게 실행된다.
+//                    object : Callback<ResponseLoginDTO> {
+//                        //Callback은 Retrofit에 있는애로 사용해야함
+//                        override fun onResponse(
+//                            call: Call<ResponseLoginDTO>,
+//                            response: Response<ResponseLoginDTO>
+//                        ) {//로그인 성공 기준 함수
+//                            if (response.isSuccessful) {
+//                                //코드가 2xx의 경우 response.isSuecessful이 작동
+//                                val result = response.body()
+//                                Toast.makeText(
+//                                    this@LoginActivity,
+//                                    "로그인에 성공했습니다.",
+//                                    Toast.LENGTH_SHORT
+//                                )
+//                                    .show()
+//                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java)
+//                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)) //이전 Activity들이 백스택에 남지 않도록 설정
+//                            } else {
+//                                // 2xx제외 4xx 5xx등 응답코드가 다른 경우에 작동하는 애들
+//                                //즉,통신은 잘 이루어지지만 응답코드가 정상이 아닌경우
+//                                Toast.makeText(
+//                                    this@LoginActivity,
+//                                    "로그인에 살패했습니다.",
+//                                    Toast.LENGTH_SHORT
+//                                )
+//                                    .show()
+//                            }
+//                        }
+//
+//                        override fun onFailure(call: Call<ResponseLoginDTO>, t: Throwable) {
+//                            //로그인 실패 기준 함수
+//                            //얘는 서버 통신이 아예 끊길떄의 경우
+//                            Toast.makeText(this@LoginActivity, "서버통신에 살패했습니다.", Toast.LENGTH_SHORT)
+//                                .show()
+//                        }
+//                    }
+//                )
+//
+
+//                if (::userData.isInitialized) { //TODO 이전세미나 추후 삭제
 //                    if (etId.text.toString() == userData.id && etPw.text.toString() == userData.pw) {
 //                        //회원가입 정보와 입력한 정보가 맞을 경우 Home화면 이동 및 SharedPreference 편집
 //                        authPreferences.edit().apply {
