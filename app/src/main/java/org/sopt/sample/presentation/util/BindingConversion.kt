@@ -32,13 +32,13 @@ fun ConstraintLayout.layouttouch(selected: Boolean) {
 @BindingAdapter("app:profile_load")
 fun ImageView.loadprofile(url: String) {
     if (url == "") {
-        Glide.with(context)
+        GlideApp.with(context)
             .load(R.drawable.ic_github)
             .circleCrop()
             .into(this)
 
     } else {
-        Glide.with(context)
+        GlideApp.with(context)
             .load(url)
             .circleCrop()
             .error(R.drawable.ic_github)
