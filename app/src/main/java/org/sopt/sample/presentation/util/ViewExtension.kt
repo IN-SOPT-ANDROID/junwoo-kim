@@ -17,3 +17,6 @@ fun View.makeToast(messgae: String) {
     ).show()
 }
 
+fun View.setOnSingleClickListener(onSingleClick: (View) -> Unit) {
+    setOnClickListener(OnSingleClickListener { onSingleClick(it) })
+}
