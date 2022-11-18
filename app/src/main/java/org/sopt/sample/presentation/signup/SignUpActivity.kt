@@ -80,7 +80,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         }
     }
 
-//    private fun withLiveData() {
+//    private fun withLiveData() { //TODO 팟장님 코드리뷰 해주신거 처럼 최대한 viewmodel에서 로직 처리 해줌 삭제예정
 //        binding.apply {
 //            etId.addTextChangedListener {
 //                activationId.value = etId.text.length in 6..10
