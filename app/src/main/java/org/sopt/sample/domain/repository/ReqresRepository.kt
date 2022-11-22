@@ -1,4 +1,4 @@
-package org.sopt.sample.data.model.repository
+package org.sopt.sample.domain.repository
 
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import retrofit2.Response

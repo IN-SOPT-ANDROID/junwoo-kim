@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
-import org.sopt.sample.data.model.repository.ReqresRepository
+import org.sopt.sample.domain.repository.ReqresRepository
 import org.sopt.sample.presentation.model.UserData
 
 class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel() {
