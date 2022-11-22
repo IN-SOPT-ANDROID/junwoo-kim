@@ -13,8 +13,6 @@ interface AuthService {
     @POST("api/user/signin")// BASE_URL마지막에 이미 /가 존재하므로 api부터 시작하는 것이다.
     suspend fun login(@Body request: RequestLoginDTO): Response<ResponseLoginDTO>//지금 Call을 넣어줄떄 Retrofit에 있는 Call객체를 넣어준다.
 
-
     @POST("api/user/signup")
     suspend fun signup(@Body request: RequestSingUpDTO): Response<ResponseSignUpDTO>
-
 }

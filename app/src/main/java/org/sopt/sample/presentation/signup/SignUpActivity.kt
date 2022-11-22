@@ -32,58 +32,6 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         }
     }
 
-    private fun addListener() {
-//        binding.btnSignUp.setOnSingleClickListener { //TODO 세미나4 필수과제 추후 삭제
-//            ApiFactory.loginService
-//                .signup(
-//                    RequestSingUpDTO(
-//                        binding.etId.text.toString(),
-//                        binding.etPw.text.toString(),
-//                        binding.etName.text.toString()
-//                    )
-//                ).enqueue(
-//                    object : Callback<ResponseSignUpDTO> {
-//                        override fun onResponse(
-//                            call: Call<ResponseSignUpDTO>,
-//                            response: Response<ResponseSignUpDTO>
-//                        ) {
-//                            if (response.isSuccessful) {
-//                                Timber.e(response.body().toString())
-//                            } else {
-//                                Timber.e(response.body().toString())
-//                            }
-//                        }
-//
-//                        override fun onFailure(call: Call<ResponseSignUpDTO>, t: Throwable) {
-//                            Timber.e(t)
-//                        }
-//                    }
-//                )
-//     }
-    }
-
-//    private fun withLiveData() { //TODO 팟장님 코드리뷰 해주신거 처럼 최대한 viewmodel에서 로직 처리 해줌 삭제예정
-//        binding.apply {
-//            etId.addTextChangedListener {
-//                activationId.value = etId.text.length in 6..10
-//            }
-//            etPw.addTextChangedListener {
-//                activationPw.value = etPw.text.length in 8..12
-//            }
-//        }
-//    }
-//
-//    private fun addObserve() {
-//        activationId.observe(this, Observer { //주로 DataBinding 갱신을 해주는 것으로 알고 있음
-//            binding.enabled = (activationId.value == true && activationPw.value == true)
-//        })
-//
-//        activationPw.observe(this, Observer {
-//            binding.enabled = (activationId.value == true && activationPw.value == true)
-//        })
-//    }
-
-
     private fun noLiveData() { // 라이브 데이터를 사용하지 않았을때의 동작
         val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
         binding.apply {

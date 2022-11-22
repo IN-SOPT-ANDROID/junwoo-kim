@@ -54,18 +54,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             }
             return@setOnItemSelectedListener true
         }
-
-//        binding.navBottomHome.setOnItemReselectedListener {
-//            when (it.itemId) {
-//                R.id.nav_home -> { //현재 프래그먼트가 home이면 리싸이클러뷰 스크롤 이동
-//                    HomeFragment.setScroll()
-//                    return@setOnItemReselectedListener
-//                }
-//                else -> { // 다른프래그먼트였다면 홈 프래그먼트로 이동
-//                    transactionFragment(HomeFragment.newInstance())
-//                }
-//            }
-//        }
     }
 
 

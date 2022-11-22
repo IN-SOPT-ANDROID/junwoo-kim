@@ -62,8 +62,4 @@ object ApiFactory {
     }
 }
 
-//    inline fun <reified T> create(): T = loginRetrofit.create<T>(T::class.java)
-//
-//    private val _loginService = loginRetrofit.create<AuthService>()
-
 

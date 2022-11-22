@@ -22,10 +22,6 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
         _userData.value = userData
     }
 
-
-//    private var _reqresList = listOf<ResponseReqresListDTO.Data>()
-//    val reqresList get() = _reqresList
-
     private val _reqresList = MutableLiveData<List<ResponseReqresListDTO.Data?>?>()
     val reqresList: LiveData<List<ResponseReqresListDTO.Data?>?> get() = _reqresList
 

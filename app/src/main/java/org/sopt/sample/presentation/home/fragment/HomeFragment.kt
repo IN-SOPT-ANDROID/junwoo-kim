@@ -48,7 +48,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         binding.rcvHome.adapter = reqresListAdapter
         binding.lifecycleOwner = viewLifecycleOwner
 
-        //reqresListAdapter.submitList(homeViewModel.getReqresList()?.data)
         homeViewModel.reqresList.observe(viewLifecycleOwner) {
             if (it != null) {
                 reqresListAdapter.submitList(it)
@@ -56,27 +55,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
         //loadData()
     }
-//    private fun loadData() { //TODO Semiar4 필수과제 추후 삭제 예정
-//        ApiFactory.reqresService.getList().enqueue(
-//            object : Callback<ResponseReqresListDTO> {
-//                override fun onResponse(
-//                    call: Call<ResponseReqresListDTO>,
-//                    response: Response<ResponseReqresListDTO>
-//                ) {
-//                    Timber.e(response.toString())
-//                    Timber.e(response.body().toString())
-//                    reqresList =
-//                        response.body()!!.data!!.toList() as List<ResponseReqresListDTO.Data>
-//                    reqresListAdapter.submitList(response.body()!!.data!!.toList())
-//                }
-//
-//                override fun onFailure(call: Call<ResponseReqresListDTO>, t: Throwable) {
-//                    throw t
-//                }
-//            }
-//        )
-//    }
-
 
     // 이하 항목은 Seminar3까지만 사용했던 함수들
     private fun initSetData() {
