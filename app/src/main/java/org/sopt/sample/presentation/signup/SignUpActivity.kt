@@ -2,6 +2,7 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
@@ -25,39 +26,32 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         addObserve()
     }
 
-    private fun addObserve() { //button 이 enabled되고 그 이후 click되면 finish
-        signUpViewModel.success.observe(this) {
+    private fun addObserve() {
+        // 경고문구에 따라서 경고창 visible 및 edittext tint 변경
+        signUpViewModel.userId.observe(this){
+            if(it.isNotEmpty()){
+                if(signUpViewModel.activationId.value == true){
+                    binding.tvWarnId.visibility = View.GONE
+                    binding.etId.background.setTint(this.getColor(R.color.gray))
+                }
+                else{
+                    binding.tvWarnId.visibility = View.VISIBLE
+                    binding.etId.background.setTint(this.getColor(R.color.red))
+                }
+            }else{
+                binding.tvWarnId.visibility = View.GONE
+                binding.etId.background.setTint(this.getColor(R.color.gray))
+            }
+        }
+
+        signUpViewModel.success.observe(this) {//button 이 enabled되고 그 이후 click되면 finish
             if (it) finish()
             else binding.root.makeSnackbar("서버통신실패!")
         }
     }
 
-    private fun noLiveData() { // 라이브 데이터를 사용하지 않았을때의 동작
-        val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-        binding.apply {
+    private fun checkCondition(){
 
-            btnSignUp.setOnClickListener {
-                if (etId.text.length in 6..10 && etPw.text.length in 8..12) { //회원가입 조건 ID 6~10 / 비밀번호 8~12
-                    intent.apply {
-                        putExtra( //UserData 형태로 Intent 전달
-                            "userdata",
-                            UserData(
-                                etId.text.toString(),
-                                etPw.text.toString(),
-                                etName.text.toString()
-                            )
-                        )
-                    }
-                    setResult(RESULT_OK, intent)
-                    finish()
-                } else {
-                    Snackbar.make(binding.root, "회원가입이 불가 합니다..", Snackbar.LENGTH_SHORT).apply {
-                        anchorView = binding.btnSignUp
-                    }.show()
-
-                }
-            }
-        }
     }
 
 }
