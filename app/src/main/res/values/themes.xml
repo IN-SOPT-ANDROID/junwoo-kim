@@ -36,7 +36,7 @@
         <item name="android:textAppearance">@style/Light_TextAppearance</item>
         <item name="android:layout_marginTop">@dimen/app_margin_6</item>
         <item name="android:textColor">@color/red</item>
-        <item name="android:textSize">@dimen/text_font_14</item>
+        <item name="android:textSize">@dimen/text_font_12</item>
     </style>
 
     <style name="Home_TextView" parent="">

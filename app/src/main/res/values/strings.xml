@@ -11,6 +11,8 @@
     <string name="et_hint_pw">비밀번호를 입력하세요</string>
     <string name="et_hint_mbti">MBTI를 입력하세요</string>
     <string name="et_hint_name">이름을 입력하세요</string>
+    <string name="tv_warn_id">아이디 형식이 올바르지 않습니다. \n아이디는 영어,숫자 포함 6~10이내 입니다.</string>
+    <string name="tv_warn_pw">비밀번호 형식이 올바르지 않습니다. \n비밀번호는 영어,숫자,특수문자 포함 6~12이내 입니다.</string>
     <string name="login">LOGIN</string>
     <string name="sign_up">SIGNUP</string>
     <string name="btn_sign_up">회원가입 완료</string>

@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+        android:animateLayoutChanges="true"
         tools:context=".presentation.signup.SignUpActivity">
 
         <TextView
@@ -41,7 +41,8 @@
             style="@style/SignUp_TextView_warn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/id"
+            android:text="@string/tv_warn_id"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/et_id"
             app:layout_constraintTop_toBottomOf="@+id/et_id" />
 
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="@string/pw"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_id" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_warn_id" />
 
         <EditText
             android:id="@+id/et_pw"
@@ -60,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_pw"
+            android:inputType="textPassword"
             android:onTextChanged="@{viewmodel::onPwTextChanged}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +72,8 @@
             style="@style/SignUp_TextView_warn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/id"
+            android:text="@string/tv_warn_pw"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/et_pw"
             app:layout_constraintTop_toBottomOf="@id/et_pw" />
 
@@ -82,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="@string/name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_pw" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_warn_pw" />
 
 
         <EditText

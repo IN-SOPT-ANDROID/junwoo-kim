@@ -32,13 +32,13 @@ class SingUpViewModel : ViewModel() { //TODO 변수를 추후에 리스트 형�
     val success: LiveData<Boolean> get() = _success
 
 
-    fun onIDTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+    fun onIDTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { // 영어,숫자 포함 6~10 글자
         val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}$")
         _activationId.value = pattern.matcher(s).find()
         _userId.value = s.toString()
     }
 
-    fun onPwTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+    fun onPwTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { // 영어,숫자,특수문자 포함 6~12 글자
         val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
         _activationPw.value = pattern.matcher(s).find()
         _userPw.value = s.toString()
