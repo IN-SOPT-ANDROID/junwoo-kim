@@ -8,6 +8,7 @@
         <variable
             name="viewmodel"
             type="org.sopt.sample.presentation.home.viewmodel.HomeViewModel" />
+
         <variable
             name="enabled"
             type="boolean" />
@@ -17,6 +18,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.home.fragment.HomeFragment">
+
+        <TextView
+            android:id="@+id/tv_empty"
+            style="@style/Server_Fail_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_24"
+            android:text="@string/home_empty"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fl_fail"

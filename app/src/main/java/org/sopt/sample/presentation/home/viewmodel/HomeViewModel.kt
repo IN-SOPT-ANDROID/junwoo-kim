@@ -21,13 +21,23 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
     private val _success = MutableLiveData<Boolean>(true)
     val success get():LiveData<Boolean> = _success
 
-    private val _reqresList = MutableLiveData<List<ResponseReqresListDTO.Data?>?>()
-    val reqresList: LiveData<List<ResponseReqresListDTO.Data?>?> get() = _reqresList
+    private val _empty = MutableLiveData<Boolean>(false)
+    val empty get():LiveData<Boolean> = _empty
+
+    private val _reqresList = MutableLiveData<List<ResponseReqresListDTO.Data>>()
+    val reqresList: LiveData<List<ResponseReqresListDTO.Data>> get() = _reqresList
 
     fun connectReqres() = viewModelScope.launch {
-        val response = reqresRepository.getList(1)
-        if (response.isSuccessful) {
-            _reqresList.value = response.body()?.data
+        val response = reqresRepository.getList(3)
+        if (response.isSuccessful && response.body() != null) { // null 체크
+            with(response.body()!!.data as List<ResponseReqresListDTO.Data>){
+                if(this.isEmpty()){
+                    _empty.value = true
+                }else{
+                    _reqresList.value = this
+                }
+            }
+
         }else if(response.code() in  400..500){
             _success.value = false
         }else{

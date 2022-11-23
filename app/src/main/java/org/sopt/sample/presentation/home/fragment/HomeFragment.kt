@@ -59,6 +59,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 binding.flFail.visibility = View.VISIBLE
             }
         }
+        homeViewModel.empty.observe(viewLifecycleOwner){
+            binding.progressReqres.visibility = View.GONE
+            binding.tvEmpty.visibility = View.VISIBLE
+        }
         //loadData()
     }
 
