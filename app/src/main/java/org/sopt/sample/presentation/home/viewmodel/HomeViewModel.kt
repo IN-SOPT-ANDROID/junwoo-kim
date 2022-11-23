@@ -18,9 +18,8 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
     private val _userData = MutableLiveData<UserData>()
     val userData get() = _userData
 
-    fun setUserData(userData: UserData) {
-        _userData.value = userData
-    }
+    private val _success = MutableLiveData<Boolean>(true)
+    val success get():LiveData<Boolean> = _success
 
     private val _reqresList = MutableLiveData<List<ResponseReqresListDTO.Data?>?>()
     val reqresList: LiveData<List<ResponseReqresListDTO.Data?>?> get() = _reqresList
@@ -29,6 +28,10 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
         val response = reqresRepository.getList()
         if (response.isSuccessful) {
             _reqresList.value = response.body()?.data
+        }else if(response.code() in  400..500){
+            _success.value = false
+        }else{
+            _success.value = false
         }
     }
 
