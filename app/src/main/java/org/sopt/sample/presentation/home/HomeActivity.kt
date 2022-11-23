@@ -20,8 +20,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private val reqresRepository = ReqresRepositoryImpl()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

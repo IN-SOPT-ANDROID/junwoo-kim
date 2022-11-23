@@ -8,13 +8,13 @@ import androidx.activity.viewModels
 import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
-import org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel
+import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel
 import org.sopt.sample.presentation.util.makeSnackbar
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
 
-    private val signUpViewModel: SingUpViewModel by viewModels()
+    private val signUpViewModel: SignUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

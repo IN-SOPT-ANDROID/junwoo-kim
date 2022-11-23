@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel" />
+            type="org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
