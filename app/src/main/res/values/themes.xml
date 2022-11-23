@@ -45,6 +45,12 @@
         <item name="android:layout_marginVertical">@dimen/app_margin_12</item>
     </style>
 
+    <style name="Server_Fail_Text" parent="">
+        <item name="android:textAppearance">@style/ExtraBold_TextAppearance</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
 
 
     <!-- font family-->

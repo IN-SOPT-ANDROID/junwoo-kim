@@ -22,6 +22,9 @@
     <string name="gallery">Gallery</string>
     <string name="viewmodel_id">뷰모델로부터 넘어온 ID : %s</string>
     <string name="viewmodel_mbti">뷰모델로부터 넘어온 MBTI : %s</string>
+    <string name="home_fail">서버통신에 실패했어요..</string>
+    <string name="fail_emoji">😵‍</string>
+    <string name="btn_fail">재시도</string>
     <string name="home_fragment">HomeFragment</string>
     <string name="search_fragment">SearchFragment</string>
     <string name="gallery_fragment">GalleryFragment</string>
