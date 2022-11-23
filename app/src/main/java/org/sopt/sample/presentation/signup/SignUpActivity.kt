@@ -1,15 +1,13 @@
 package org.sopt.sample.presentation.signup
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
-import org.sopt.sample.presentation.login.LoginActivity
-import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel
 import org.sopt.sample.presentation.util.makeSnackbar
 
@@ -28,19 +26,25 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
     private fun addObserve() {
         // 경고문구에 따라서 경고창 visible 및 edittext tint 변경
-        signUpViewModel.userId.observe(this){
-            if(it.isNotEmpty()){
-                if(signUpViewModel.activationId.value == true){
-                    binding.tvWarnId.visibility = View.GONE
-                    binding.etId.background.setTint(this.getColor(R.color.gray))
-                }
-                else{
-                    binding.tvWarnId.visibility = View.VISIBLE
-                    binding.etId.background.setTint(this.getColor(R.color.red))
-                }
-            }else{
-                binding.tvWarnId.visibility = View.GONE
-                binding.etId.background.setTint(this.getColor(R.color.gray))
+        signUpViewModel.userId.observe(this) {
+            with(binding) {
+                checkCondition(
+                    tvWarnId,
+                    etId,
+                    viewmodel!!.activationId.value,
+                    viewmodel!!.userId.value
+                )
+            }
+        }
+
+        signUpViewModel.userPw.observe(this) {
+            with(binding) {
+                checkCondition(
+                    tvWarnPw,
+                    etPw,
+                    viewmodel!!.activationPw.value,
+                    viewmodel!!.userPw.value
+                )
             }
         }
 
@@ -50,8 +54,25 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         }
     }
 
-    private fun checkCondition(){
-
+    private fun checkCondition(
+        warnText: TextView,
+        editText: EditText,
+        activation: Boolean?,
+        input: String?
+    ) {
+        if (!(input.isNullOrEmpty())) {
+            // 경고문자 활성화 함수, 패턴만족 및 글자수 까지 검사하여 패턴만족 + 글자 있음 일때만 경고창 출력
+            if (activation == true) {
+                warnText.visibility = View.GONE
+                editText.background.setTint(this.getColor(R.color.gray))
+            } else {
+                warnText.visibility = View.VISIBLE
+                editText.background.setTint(this.getColor(R.color.red))
+            }
+        } else {
+            warnText.visibility = View.GONE
+            editText.background.setTint(this.getColor(R.color.gray))
+        }
     }
 
 }

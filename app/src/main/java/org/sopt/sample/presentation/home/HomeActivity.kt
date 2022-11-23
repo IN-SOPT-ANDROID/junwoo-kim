@@ -64,14 +64,4 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         return true
     }
 
-    private fun getResult() { // LoginActivity가 보낸 intent 수신
-        val userData = //getParcelableExtra 함수 deprecated 대처
-            if (android.os.Build.VERSION.SDK_INT >= 33)
-                intent.getParcelableExtra("userdata", UserData::class.java)!!
-            else
-                intent.getParcelableExtra("userdata")!!
-        binding.userdata = userData // 데이터바인딩
-        homeViewModel.setUserData(userData) // 뷰모델에서의 Data set
-    }
-
 }

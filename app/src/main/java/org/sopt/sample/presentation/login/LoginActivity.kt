@@ -33,7 +33,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         setContentView(binding.root)
         authPreferences = getSharedPreferences("autologin", Activity.MODE_PRIVATE)
 
-        authPreferenceCheck()
+        //authPreferenceCheck()
         loginListener()
         singUpListener()
     }
