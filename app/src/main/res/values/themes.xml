@@ -16,7 +16,7 @@
 
     <style name="SignUp_EditText" parent="">
         <item name="android:layout_marginHorizontal">@dimen/app_base_margin_horizontal</item>
-        <item name="android:layout_marginTop">@dimen/app_margin_24</item>
+        <item name="android:layout_marginTop">@dimen/app_margin_12</item>
     </style>
 
     <style name="SignUp_TextView_title" parent="">
@@ -30,6 +30,13 @@
         <item name="android:layout_marginStart">@dimen/app_base_margin_horizontal</item>
         <item name="android:layout_marginTop">@dimen/app_margin_32</item>
         <item name="android:textSize">@dimen/text_font_20</item>
+    </style>
+
+    <style name="SignUp_TextView_warn" parent="">
+        <item name="android:textAppearance">@style/Light_TextAppearance</item>
+        <item name="android:layout_marginTop">@dimen/app_margin_6</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">@dimen/text_font_14</item>
     </style>
 
     <style name="Home_TextView" parent="">
