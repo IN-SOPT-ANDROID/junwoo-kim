@@ -12,7 +12,7 @@ import org.sopt.sample.presentation.model.UserData
 class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel() {
 
     init {
-        getReqresList()
+        connectReqres()
     }
 
     private val _userData = MutableLiveData<UserData>()
@@ -24,8 +24,8 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
     private val _reqresList = MutableLiveData<List<ResponseReqresListDTO.Data?>?>()
     val reqresList: LiveData<List<ResponseReqresListDTO.Data?>?> get() = _reqresList
 
-    private fun getReqresList() = viewModelScope.launch {
-        val response = reqresRepository.getList()
+    fun connectReqres() = viewModelScope.launch {
+        val response = reqresRepository.getList(1)
         if (response.isSuccessful) {
             _reqresList.value = response.body()?.data
         }else if(response.code() in  400..500){

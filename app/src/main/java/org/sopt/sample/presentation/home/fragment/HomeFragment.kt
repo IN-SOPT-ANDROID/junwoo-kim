@@ -59,9 +59,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 binding.flFail.visibility = View.VISIBLE
             }
         }
-        binding.btnRetry.setOnClickListener {
-            binding.flFail.visibility = View.GONE
-        }
         //loadData()
     }
 
