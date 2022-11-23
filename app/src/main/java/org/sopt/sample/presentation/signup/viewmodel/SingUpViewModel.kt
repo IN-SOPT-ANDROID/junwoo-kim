@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.sample.application.ApiFactory
 import org.sopt.sample.data.model.dto.RequestSingUpDTO
+import java.util.regex.Pattern
 
 class SingUpViewModel : ViewModel() { //TODO 변수를 추후에 리스트 형태로 관리해도 좋을듯 함
 
@@ -32,12 +33,14 @@ class SingUpViewModel : ViewModel() { //TODO 변수를 추후에 리스트 형�
 
 
     fun onIDTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        _activationId.value = s.length in 6..10
+        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}$")
+        _activationId.value = pattern.matcher(s).find()
         _userId.value = s.toString()
     }
 
     fun onPwTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        _activationPw.value = s.length in 8..12
+        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
+        _activationPw.value = pattern.matcher(s).find()
         _userPw.value = s.toString()
     }
 
