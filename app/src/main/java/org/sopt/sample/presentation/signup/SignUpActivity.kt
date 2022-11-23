@@ -2,51 +2,35 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.login.LoginActivity
 import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel
+import org.sopt.sample.presentation.util.makeSnackbar
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
-    private var activationId = MutableLiveData<Boolean>(false)
-    private var activationPw = MutableLiveData<Boolean>(false)
+
+    private val signUpViewModel: SingUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.enabled = false
-        withLiveData()
+        binding.lifecycleOwner = this
+        binding.viewmodel = signUpViewModel
         addObserve()
     }
 
-    private fun withLiveData() {
-        binding.apply {
-            etId.addTextChangedListener {
-                activationId.value = etId.text.length in 6..10
-            }
-            etPw.addTextChangedListener {
-                activationPw.value = etPw.text.length in 8..12
-            }
+    private fun addObserve() { //button 이 enabled되고 그 이후 click되면 finish
+        signUpViewModel.success.observe(this) {
+            if (it) finish()
+            else binding.root.makeSnackbar("서버통신실패!")
         }
     }
-
-    private fun addObserve() {
-        activationId.observe(this, Observer { //주로 DataBinding 갱신을 해주는 것으로 알고 있음
-            binding.enabled = (activationId.value == true && activationPw.value == true)
-        })
-
-        activationPw.observe(this, Observer {
-            binding.enabled = (activationId.value == true && activationPw.value == true)
-        })
-    }
-
 
     private fun noLiveData() { // 라이브 데이터를 사용하지 않았을때의 동작
         val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
@@ -60,7 +44,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
                             UserData(
                                 etId.text.toString(),
                                 etPw.text.toString(),
-                                etMbti.text.toString()
+                                etName.text.toString()
                             )
                         )
                     }
