@@ -25,7 +25,7 @@ object ApiFactory {
         Retrofit.Builder()
             .baseUrl(SOPT_BAST_URL)
             .client(provideOkHttpClient(AppInterceptor()))
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(Json.asConverterFactory(APPLICATION_JSON.toMediaType()))
             .build()
     }
 

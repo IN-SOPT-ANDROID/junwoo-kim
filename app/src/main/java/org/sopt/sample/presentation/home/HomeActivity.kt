@@ -11,8 +11,7 @@ import org.sopt.sample.presentation.home.fragment.GalleryFragment
 import org.sopt.sample.presentation.home.fragment.HomeFragment
 import org.sopt.sample.presentation.home.fragment.SearchFragment
 import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
-import org.sopt.sample.presentation.home.viewmodel.ReqresListViewModelFactory
-import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.home.viewmodel.HomeViewModelFactory
 
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -23,7 +22,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val factory = ReqresListViewModelFactory(reqresRepository)
+        val factory = HomeViewModelFactory(reqresRepository)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         //getResult() seminar 3까지만 사용
         init()
