@@ -4,22 +4,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import org.sopt.sample.R
+import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel
+import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
 
-    private val signUpViewModel: SignUpViewModel by viewModels()
+    private lateinit var signUpViewModel: SignUpViewModel
+    private val authRepository = AuthRepositoryImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.lifecycleOwner = this
+        val factory = SignUpViewModelFactory(authRepository)
+        signUpViewModel = ViewModelProvider(this, factory)[SignUpViewModel::class.java]
         binding.viewmodel = signUpViewModel
         addObserve()
     }

@@ -9,7 +9,7 @@ import org.sopt.sample.domain.repository.AuthRepository
 import retrofit2.Response
 
 class AuthRepositoryImpl :AuthRepository {
-    override suspend fun postSingup(dto: RequestSingUpDTO): Response<ResponseSignUpDTO> {
+    override suspend fun postSignUp(dto: RequestSingUpDTO): Response<ResponseSignUpDTO> {
         return ApiFactory.loginService.signup(dto)
     }
 

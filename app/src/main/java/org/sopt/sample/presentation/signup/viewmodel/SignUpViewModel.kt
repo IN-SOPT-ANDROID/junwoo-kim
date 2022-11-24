@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.sopt.sample.application.ApiFactory
 import org.sopt.sample.data.model.dto.RequestSingUpDTO
+import org.sopt.sample.domain.repository.AuthRepository
 import java.util.regex.Pattern
 
-class SignUpViewModel : ViewModel() { //TODO 변수를 추후에 리스트 형태로 관리해도 좋을듯 함
+class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() { //TODO 변수를 추후에 리스트 형태로 관리해도 좋을듯 함
 
     //activation
     private val _activationId = MutableLiveData<Boolean>(false)
@@ -52,9 +52,8 @@ class SignUpViewModel : ViewModel() { //TODO 변수를 추후에 리스트 형�
     }
 
     fun onPostSingUp() {
-
         viewModelScope.launch {
-            val response = ApiFactory.loginService.signup(
+            val response = authRepository.postSignUp(
                 RequestSingUpDTO(
                     userId.value ?: "", userPw.value ?: "", userName.value ?: ""
                 )
