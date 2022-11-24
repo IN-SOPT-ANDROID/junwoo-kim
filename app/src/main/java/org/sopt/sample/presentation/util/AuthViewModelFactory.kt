@@ -3,7 +3,7 @@ package org.sopt.sample.presentation.util
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.sopt.sample.domain.repository.AuthRepository
-import org.sopt.sample.presentation.login.ViewModel.LoginViewModel
+import org.sopt.sample.presentation.login.viewmodel.LoginViewModel
 import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel
 
 @Suppress("UNCHECKED_CAST")

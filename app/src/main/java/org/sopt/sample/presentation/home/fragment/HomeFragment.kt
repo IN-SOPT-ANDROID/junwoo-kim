@@ -53,20 +53,18 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 binding.progressReqres.visibility = View.GONE
             }
         }
-        homeViewModel.success.observe(viewLifecycleOwner){ // 서버통신 실패한 경우
+        homeViewModel.success.observe(viewLifecycleOwner){ // 서버통신 실패한 경우 FailView
             if(!it){
                 binding.progressReqres.visibility = View.GONE
                 binding.flFail.visibility = View.VISIBLE
             }
         }
-        homeViewModel.empty.observe(viewLifecycleOwner){
+        homeViewModel.empty.observe(viewLifecycleOwner){ // 빈 데이터가 온경우 EmptyView
             binding.progressReqres.visibility = View.GONE
             binding.tvEmpty.visibility = View.VISIBLE
         }
         //loadData()
     }
-
-
 
     // 이하 항목은 Seminar3까지만 사용했던 함수들
     private fun initSetData() {

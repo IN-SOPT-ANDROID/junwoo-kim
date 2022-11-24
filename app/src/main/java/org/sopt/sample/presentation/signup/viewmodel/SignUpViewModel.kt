@@ -27,7 +27,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
 
-    //click
+    //server connect
     private val _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean> get() = _success
 
