@@ -60,8 +60,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             }
         }
         homeViewModel.empty.observe(viewLifecycleOwner){ // 빈 데이터가 온경우 EmptyView
-            binding.progressReqres.visibility = View.GONE
-            binding.tvEmpty.visibility = View.VISIBLE
+            if(it){
+                binding.progressReqres.visibility = View.GONE
+                binding.tvEmpty.visibility = View.VISIBLE
+            }
         }
         //loadData()
     }

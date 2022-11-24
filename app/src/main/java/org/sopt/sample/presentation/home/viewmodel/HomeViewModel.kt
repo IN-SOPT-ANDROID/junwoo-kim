@@ -28,19 +28,19 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
     val reqresList: LiveData<List<ResponseReqresListDTO.Data>> get() = _reqresList
 
     fun connectReqres() = viewModelScope.launch {
-        val response = reqresRepository.getList(3)
+        val response = reqresRepository.getList(2)
         if (response.isSuccessful && response.body() != null) { // null 체크
-            with(response.body()!!.data as List<ResponseReqresListDTO.Data>){
-                if(this.isEmpty()){
+            with(response.body()!!.data as List<ResponseReqresListDTO.Data>) {
+                if (this.isEmpty()) {
                     _empty.value = true
-                }else{
+                } else {
                     _reqresList.value = this
                 }
             }
 
-        }else if(response.code() in  400..500){
+        } else if (response.code() in 400..500) {
             _success.value = false
-        }else{
+        } else {
             _success.value = false
         }
     }

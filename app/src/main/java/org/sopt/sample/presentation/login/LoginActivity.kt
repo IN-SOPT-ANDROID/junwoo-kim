@@ -6,19 +6,18 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import org.sopt.sample.R
-import org.sopt.sample.application.ApiFactory
-import org.sopt.sample.data.model.dto.RequestLoginDTO
+import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.home.HomeActivity
+import org.sopt.sample.presentation.login.viewmodel.LoginViewModel
 import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.presentation.signup.SignUpActivity
+import org.sopt.sample.presentation.util.AuthViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
-import org.sopt.sample.presentation.util.setOnSingleClickListener
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
@@ -26,27 +25,32 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     private lateinit var userData: UserData
     private lateinit var authPreferences: SharedPreferences
 
-    private val authService by lazy { ApiFactory.loginService }
+    private lateinit var loginViewModel: LoginViewModel
+    private val authRepository = AuthRepositoryImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         authPreferences = getSharedPreferences("autologin", Activity.MODE_PRIVATE)
 
+        binding.lifecycleOwner = this
+        val factory = AuthViewModelFactory(authRepository)
+        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
+        binding.viewmodel = loginViewModel
+
         //authPreferenceCheck()
-        loginListener()
+        addObserve()
         singUpListener()
     }
 
-    private fun authPreferenceCheck() { // SharedPreference 체크 함수
-        if (authPreferences.getString("id", null) != null) {
-            userData = UserData(
-                authPreferences.getString("id", null).toString(),
-                authPreferences.getString("pw", null).toString(),
-                authPreferences.getString("mbti", null).toString(),
-            )
-            // 이전 로그인 기록이 있을 경우 바로 HomeActivity로 이동
-            startHomeActivity(userData)
+    private fun addObserve() {
+        loginViewModel.success.observe(this) { //로그인 성공되면 자동으로 Home이동
+            if (it) {
+                startActivity(
+                    Intent(this@LoginActivity, HomeActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
+            } else binding.root.makeSnackbar("서버통신실패!")
         }
     }
 
@@ -70,28 +74,15 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    private fun loginListener() { // login button listener
-        binding.apply {
-            btnLogin.setOnSingleClickListener {
-                // 비동기로 로그인 하는 함수
-                // mvvm관점으로 본다면 view를 어쨋든 가지고 있기때문에 뷰모델에서 동작하게끔 해주어야 한다고 생각하지만
-                // 액티비티단에서 lifecyclescope 동작을 한번 해보려고 다음과 같이 작성해봤습니다!!
-                lifecycleScope.launch {
-                    val response = authService.login(
-                        RequestLoginDTO(
-                            binding.etId.text.toString(), binding.etPw.text.toString()
-                        )
-                    )
-                    if (response.isSuccessful) {
-                        startActivity(
-                            Intent(this@LoginActivity, HomeActivity::class.java)
-                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        ) //이전 Activity들이 백스택에 남지 않도록 설정
-                    } else {
-                        binding.root.makeSnackbar("로그인에 실패하였습니다.")
-                    }
-                }
-            }
+    private fun authPreferenceCheck() { // SharedPreference 체크 함수
+        if (authPreferences.getString("id", null) != null) {
+            userData = UserData(
+                authPreferences.getString("id", null).toString(),
+                authPreferences.getString("pw", null).toString(),
+                authPreferences.getString("mbti", null).toString(),
+            )
+            // 이전 로그인 기록이 있을 경우 바로 HomeActivity로 이동
+            startHomeActivity(userData)
         }
     }
 
