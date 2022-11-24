@@ -10,7 +10,7 @@ import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel
-import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModelFactory
+import org.sopt.sample.presentation.util.AuthViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
@@ -23,7 +23,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.lifecycleOwner = this
-        val factory = SignUpViewModelFactory(authRepository)
+        val factory = AuthViewModelFactory(authRepository)
         signUpViewModel = ViewModelProvider(this, factory)[SignUpViewModel::class.java]
         binding.viewmodel = signUpViewModel
         addObserve()
