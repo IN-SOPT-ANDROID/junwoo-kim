@@ -21,7 +21,6 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         binding.lifecycleOwner = this
         val factory = AuthViewModelFactory(authRepository)
         signUpViewModel = ViewModelProvider(this, factory)[SignUpViewModel::class.java]
@@ -65,7 +64,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
         activation: Boolean?,
         input: String?
     ) {
-        if (!(input.isNullOrEmpty())) {
+        if (!(input.isNullOrEmpty())) { // 버튼 enabled에 userValue
             // 경고문자 활성화 함수, 패턴만족 및 글자수 까지 검사하여 패턴만족 + 글자 있음 일때만 경고창 출력
             if (activation == true) {
                 warnText.visibility = View.GONE

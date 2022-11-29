@@ -21,7 +21,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        binding.lifecycleOwner = this
         val factory = HomeViewModelFactory(reqresRepository)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         //getResult() seminar 3까지만 사용

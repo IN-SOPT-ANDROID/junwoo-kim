@@ -11,11 +11,10 @@ class AuthViewModelFactory(
     private val authRepository: AuthRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(SignUpViewModel::class.java)){
-            return SignUpViewModel(authRepository) as T
+        return if(modelClass.isAssignableFrom(SignUpViewModel::class.java)){
+            SignUpViewModel(authRepository) as T
         }else if(modelClass.isAssignableFrom(LoginViewModel::class.java)){
-            return LoginViewModel(authRepository) as T
-        }
-        else throw IllegalArgumentException("ViewModel class not found")
+            LoginViewModel(authRepository) as T
+        } else throw IllegalArgumentException("ViewModel class not found")
     }
 }
