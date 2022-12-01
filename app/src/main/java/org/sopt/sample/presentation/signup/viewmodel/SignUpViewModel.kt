@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.RequestSingUpDTO
 import org.sopt.sample.domain.repository.AuthRepository
+import timber.log.Timber
 import java.util.regex.Pattern
 
-class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() { //TODO 변수를 추후에 리스트 형태로 관리해도 좋을듯 함
+class SignUpViewModel(private val authRepository: AuthRepository) :
+    ViewModel() { //TODO 변수를 추후에 리스트 형태로 관리해도 좋을듯 함
 
     //activation
     private val _activationId = MutableLiveData<Boolean>(false)
@@ -39,9 +41,11 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
     }
 
     fun onPwTextChanged(
-        s: CharSequence, start: Int, before: Int, count: Int) {
+        s: CharSequence, start: Int, before: Int, count: Int
+    ) {
         // 영어,숫자,특수문자 포함 6~12 글자
-        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
+        val pattern =
+            Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
         _activationPw.value = pattern.matcher(s).find()
         _userPw.value = s.toString()
     }
@@ -53,12 +57,18 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
 
     fun onPostSingUp() {
         viewModelScope.launch {
-            val response = authRepository.postSignUp(
-                RequestSingUpDTO(
-                    userId.value ?: "", userPw.value ?: "", userName.value ?: ""
+            kotlin.runCatching {
+                authRepository.postSignUp(
+                    RequestSingUpDTO(
+                        userId.value ?: "", userPw.value ?: "", userName.value ?: ""
+                    )
                 )
-            )
-            _success.value = response.isSuccessful
+            }.onSuccess {
+                _success.value = true
+            }.onFailure {
+                Timber.e(it)
+                _success.value = false
+            }
         }
     }
 

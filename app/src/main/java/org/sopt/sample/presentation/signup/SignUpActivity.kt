@@ -54,7 +54,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
         signUpViewModel.success.observe(this) {//button 이 enabled되고 그 이후 click되면 finish
             if (it) finish()
-            else binding.root.makeSnackbar("서버통신실패!")
+            else binding.root.makeSnackbar("회원가입에 실패하였습니다.")
         }
     }
 
