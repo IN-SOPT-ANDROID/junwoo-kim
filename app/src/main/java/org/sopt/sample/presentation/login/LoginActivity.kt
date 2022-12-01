@@ -6,12 +6,13 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
 import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivityLoginBinding
-import org.sopt.sample.presentation.base.BindingActivity
+import org.sopt.sample.presentation.base.BindingSplashActivity
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.login.viewmodel.LoginViewModel
 import org.sopt.sample.presentation.model.UserData
@@ -19,7 +20,7 @@ import org.sopt.sample.presentation.signup.SignUpActivity
 import org.sopt.sample.presentation.util.AuthViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
 
-class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
+class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private lateinit var getResultInfo: ActivityResultLauncher<Intent>
     private lateinit var userData: UserData
@@ -27,6 +28,10 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     private lateinit var loginViewModel: LoginViewModel
     private val authRepository = AuthRepositoryImpl()
+
+    override fun loadSplash() {
+        installSplashScreen()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,5 +97,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) //이전 Activity들이 백스택에 남지 않도록 설정
             .apply { putExtra("userdata", userData) })
     }
+
+
 
 }
