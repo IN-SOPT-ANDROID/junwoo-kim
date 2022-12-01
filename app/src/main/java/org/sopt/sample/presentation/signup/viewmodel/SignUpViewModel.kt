@@ -64,12 +64,10 @@ class SignUpViewModel(private val authRepository: AuthRepository) :
                     )
                 )
             }.onSuccess {
-                _success.value = true
+                _success.value = it.isSuccessful
             }.onFailure {
                 Timber.e(it)
-                _success.value = false
             }
         }
     }
-
 }

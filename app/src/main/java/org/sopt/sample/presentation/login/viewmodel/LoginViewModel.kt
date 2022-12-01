@@ -6,12 +6,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.RequestLoginDTO
+import org.sopt.sample.data.model.dto.ResponseLoginDTO
 import org.sopt.sample.domain.repository.AuthRepository
+import retrofit2.Response
+import timber.log.Timber
 
 class LoginViewModel(private val authRepository: AuthRepository) :ViewModel() {
     //server connect
     private val _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean> get() = _success
+
+    private val _error = MutableLiveData<Boolean>()
+    val error: LiveData<Boolean> get() = _error
 
     //text
     private val _userId = MutableLiveData<String>()
@@ -35,12 +41,18 @@ class LoginViewModel(private val authRepository: AuthRepository) :ViewModel() {
 
     fun onPostLogin() {
         viewModelScope.launch {
-            val response = authRepository.postLogin(
-                RequestLoginDTO(
-                    userId.value ?: "", userPw.value ?: ""
+           kotlin.runCatching {
+                authRepository.postLogin(
+                    RequestLoginDTO(
+                        userId.value ?: "", userPw.value ?: ""
+                    )
                 )
-            )
-            _success.value = response.isSuccessful
+            }.onSuccess {  value: Response<ResponseLoginDTO> ->
+                _success.value = value.isSuccessful
+            }.onFailure {
+                Timber.e(it)
+                _error.value = true
+            }
         }
     }
 

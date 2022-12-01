@@ -55,7 +55,10 @@ class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activ
                     Intent(this@LoginActivity, HomeActivity::class.java)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 )
-            } else binding.root.makeSnackbar("서버통신실패!")
+            } else binding.root.makeSnackbar("정확한 아이디 비밀번호를 입력해주세요.")
+        }
+        loginViewModel.error.observe(this){ //인터넷 불안정 등의 서버통신 자체가 실패할때
+            binding.root.makeSnackbar("서버통신실패!")
         }
     }
 

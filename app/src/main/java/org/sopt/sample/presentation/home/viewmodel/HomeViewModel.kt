@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.domain.repository.ReqresRepository
 import org.sopt.sample.presentation.model.UserData
+import timber.log.Timber
 
 class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel() {
 
@@ -18,7 +19,7 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
     private val _userData = MutableLiveData<UserData>()
     val userData get() = _userData
 
-    private val _success = MutableLiveData<Boolean>(true) // 서버통신 성공 실패여부 판단
+    private val _success = MutableLiveData<Boolean>() // 서버통신 성공 실패여부 판단
     val success get():LiveData<Boolean> = _success
 
     private val _empty = MutableLiveData<Boolean>(false) // 서버통신은 성공했으나 빈데이터인지 아닌지 판단
@@ -28,19 +29,22 @@ class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel(
     val reqresList: LiveData<List<ResponseReqresListDTO.Data>> get() = _reqresList
 
     fun connectReqres() = viewModelScope.launch {
-        val response = reqresRepository.getList(2)
-        if (response.isSuccessful && response.body() != null) { // null 체크
-            with(response.body()!!.data as List<ResponseReqresListDTO.Data>) {
-                if (this.isEmpty()) {
-                    _empty.value = true
-                } else {
-                    _reqresList.value = this
+        kotlin.runCatching {
+            reqresRepository.getList(2)
+        }.onSuccess {
+            if (it.isSuccessful && it.body() != null) { // null 체크
+                with(it.body()!!.data as List<ResponseReqresListDTO.Data>) {
+                    if (this.isEmpty()) {
+                        _empty.value = true
+                    } else {
+                        _reqresList.value = this
+                    }
                 }
+            } else { // 응답코드 400~599
+                _success.value = false
             }
-
-        } else if (response.code() in 400..500) {
-            _success.value = false
-        } else {
+        }.onFailure { // 서버통신 실패 http exception 등...
+            Timber.e(it)
             _success.value = false
         }
     }
