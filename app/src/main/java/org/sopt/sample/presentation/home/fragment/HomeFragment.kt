@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.databinding.FragmentHomeBinding
@@ -16,6 +17,7 @@ import org.sopt.sample.presentation.home.adapter.setSelectionTracker
 import org.sopt.sample.presentation.home.model.GitData
 import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
 
+@AndroidEntryPoint
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     companion object {

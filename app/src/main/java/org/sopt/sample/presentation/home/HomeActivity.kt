@@ -3,6 +3,7 @@ package org.sopt.sample.presentation.home
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
 import org.sopt.sample.data.repository.ReqresRepositoryImpl
 import org.sopt.sample.databinding.ActivityHomeBinding
@@ -13,6 +14,7 @@ import org.sopt.sample.presentation.home.fragment.SearchFragment
 import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
 import org.sopt.sample.presentation.home.viewmodel.HomeViewModelFactory
 
+@AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private lateinit var homeViewModel: HomeViewModel

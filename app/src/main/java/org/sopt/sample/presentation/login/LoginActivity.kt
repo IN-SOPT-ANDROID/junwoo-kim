@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
 import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivityLoginBinding
@@ -20,6 +21,7 @@ import org.sopt.sample.presentation.signup.SignUpActivity
 import org.sopt.sample.presentation.util.AuthViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
 
+@AndroidEntryPoint
 class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private lateinit var getResultInfo: ActivityResultLauncher<Intent>

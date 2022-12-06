@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.RequestSingUpDTO
 import org.sopt.sample.domain.repository.AuthRepository
 import timber.log.Timber
 import java.util.regex.Pattern
 
+@HiltViewModel
 class SignUpViewModel(private val authRepository: AuthRepository) :
     ViewModel() { //TODO 변수를 추후에 리스트 형태로 관리해도 좋을듯 함
 

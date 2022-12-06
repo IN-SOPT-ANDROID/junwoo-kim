@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
 import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivitySignUpBinding
@@ -13,6 +14,7 @@ import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel
 import org.sopt.sample.presentation.util.AuthViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
 
+@AndroidEntryPoint
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
 

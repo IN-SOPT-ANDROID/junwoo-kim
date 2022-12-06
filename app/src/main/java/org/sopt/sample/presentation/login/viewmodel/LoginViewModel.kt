@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.RequestLoginDTO
 import org.sopt.sample.data.model.dto.ResponseLoginDTO
@@ -11,6 +12,7 @@ import org.sopt.sample.domain.repository.AuthRepository
 import retrofit2.Response
 import timber.log.Timber
 
+@HiltViewModel
 class LoginViewModel(private val authRepository: AuthRepository) :ViewModel() {
     //server connect
     private val _success = MutableLiveData<Boolean>()
