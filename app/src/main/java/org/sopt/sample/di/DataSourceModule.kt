@@ -15,48 +15,41 @@ import org.sopt.sample.application.Util.Constant
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module
 @InstallIn(SingletonComponent::class)
+@Module
 object DataSourceModule {
 
-    @Singleton
-    @Provides
     private fun provideOkHttpClient(interceptor: AppInterceptor): OkHttpClient =
         OkHttpClient.Builder().run {
             addInterceptor(interceptor)
             build()
         }
 
-    @Singleton
-    @Provides
-    fun provideLoginRetrofit(): Retrofit {
-        return Retrofit.Builder()
+    private val soptRetrofit =
+        Retrofit.Builder()
             .baseUrl(Constant.SOPT_BAST_URL)
             .client(provideOkHttpClient(AppInterceptor()))
             .addConverterFactory(Json.asConverterFactory(Constant.APPLICATION_JSON.toMediaType()))
             .build()
-    }
 
-    @Singleton
-    @Provides
-    fun provideLoginService(retrofit: Retrofit): AuthService {
-        return retrofit.create(AuthService::class.java)
-    }
 
-    @Singleton
-    @Provides
-    fun provideReqresRetrofit(): Retrofit {
-       return Retrofit.Builder()
+    private val reqresRetrofit =
+        Retrofit.Builder()
             .baseUrl(Constant.REQRES_BASE_URL)
             .client(provideOkHttpClient(AppInterceptor()))
             .addConverterFactory(Json.asConverterFactory(Constant.APPLICATION_JSON.toMediaType()))
             .build()
+
+    @Provides
+    @Singleton
+    fun provideLoginService(): AuthService {
+        return soptRetrofit.create(AuthService::class.java)
     }
 
-    @Singleton
     @Provides
-    fun provideReqresService(retrofit: Retrofit): ReqresApi {
-        return retrofit.create(ReqresApi::class.java)
+    @Singleton
+    fun provideReqresService(): ReqresApi {
+        return reqresRetrofit.create(ReqresApi::class.java)
     }
 
 
