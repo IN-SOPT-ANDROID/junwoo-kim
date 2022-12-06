@@ -6,19 +6,17 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
-import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.base.BindingSplashActivity
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.login.viewmodel.LoginViewModel
 import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.presentation.signup.SignUpActivity
-import org.sopt.sample.presentation.util.AuthViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
 
 @AndroidEntryPoint
@@ -28,8 +26,7 @@ class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activ
     private lateinit var userData: UserData
     private lateinit var authPreferences: SharedPreferences
 
-    private lateinit var loginViewModel: LoginViewModel
-    private val authRepository = AuthRepositoryImpl()
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun loadSplash() {
         installSplashScreen()
@@ -41,8 +38,6 @@ class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activ
         authPreferences = getSharedPreferences("autologin", Activity.MODE_PRIVATE)
 
         binding.lifecycleOwner = this
-        val factory = AuthViewModelFactory(authRepository)
-        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
         binding.viewmodel = loginViewModel
 
         //authPreferenceCheck()
