@@ -11,9 +11,10 @@ import org.sopt.sample.data.model.dto.ResponseLoginDTO
 import org.sopt.sample.domain.repository.AuthRepository
 import retrofit2.Response
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel(private val authRepository: AuthRepository) :ViewModel() {
+class LoginViewModel @Inject constructor(private val authRepository: AuthRepository) :ViewModel() {
     //server connect
     private val _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean> get() = _success

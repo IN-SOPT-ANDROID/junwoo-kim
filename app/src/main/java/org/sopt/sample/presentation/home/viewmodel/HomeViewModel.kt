@@ -10,9 +10,10 @@ import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.domain.repository.ReqresRepository
 import org.sopt.sample.presentation.model.UserData
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val reqresRepository: ReqresRepository) : ViewModel() {
 
     init {
         connectReqres()

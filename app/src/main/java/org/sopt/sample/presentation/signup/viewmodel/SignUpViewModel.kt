@@ -10,9 +10,10 @@ import org.sopt.sample.data.model.dto.RequestSingUpDTO
 import org.sopt.sample.domain.repository.AuthRepository
 import timber.log.Timber
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel(private val authRepository: AuthRepository) :
+class SignUpViewModel @Inject constructor(private val authRepository: AuthRepository) :
     ViewModel() { //TODO 변수를 추후에 리스트 형태로 관리해도 좋을듯 함
 
     //activation
