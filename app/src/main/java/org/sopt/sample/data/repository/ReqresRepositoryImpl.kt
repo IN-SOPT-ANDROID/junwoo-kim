@@ -1,12 +1,15 @@
 package org.sopt.sample.data.repository
 
-import org.sopt.sample.application.ApiFactory
+import org.sopt.sample.application.ReqresApi
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.domain.repository.ReqresRepository
 import retrofit2.Response
+import javax.inject.Inject
 
-class ReqresRepositoryImpl : ReqresRepository {
-    override suspend fun getList(page:Int): Response<ResponseReqresListDTO> {
-        return ApiFactory.reqresService.getReqresList(page)
+class ReqresRepositoryImpl @Inject constructor(
+    private val reqresService: ReqresApi
+) : ReqresRepository {
+    override suspend fun getList(page: Int): Response<ResponseReqresListDTO> {
+        return reqresService.getReqresList(page)
     }
 }
