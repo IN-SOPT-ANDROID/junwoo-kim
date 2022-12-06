@@ -6,7 +6,7 @@ import org.sopt.sample.domain.repository.ReqresRepository
 import retrofit2.Response
 
 class ReqresRepositoryImpl : ReqresRepository {
-    override suspend fun getList(): Response<ResponseReqresListDTO> {
-        return ApiFactory.reqresService.getReqresList()
+    override suspend fun getList(page:Int): Response<ResponseReqresListDTO> {
+        return ApiFactory.reqresService.getReqresList(page)
     }
 }

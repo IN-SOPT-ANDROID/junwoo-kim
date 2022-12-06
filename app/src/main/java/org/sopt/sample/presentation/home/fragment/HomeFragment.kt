@@ -34,7 +34,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         GitData(0, "", "Repos from local json", "", 0), // 헤더타입 지정
     )
 
-    private var reqresList = listOf<ResponseReqresListDTO.Data>()
     private val homeViewModel: HomeViewModel by activityViewModels()
 
     private lateinit var gitAdapter: GitAdapter
@@ -51,6 +50,19 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         homeViewModel.reqresList.observe(viewLifecycleOwner) {
             if (it != null) {
                 reqresListAdapter.submitList(it)
+                binding.progressReqres.visibility = View.GONE
+            }
+        }
+        homeViewModel.success.observe(viewLifecycleOwner){ // 서버통신 실패한 경우 FailView
+            if(!it){
+                binding.progressReqres.visibility = View.GONE
+                binding.flFail.visibility = View.VISIBLE
+            }
+        }
+        homeViewModel.empty.observe(viewLifecycleOwner){ // 빈 데이터가 온경우 EmptyView
+            if(it){
+                binding.progressReqres.visibility = View.GONE
+                binding.tvEmpty.visibility = View.VISIBLE
             }
         }
         //loadData()

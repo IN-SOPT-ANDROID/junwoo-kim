@@ -1,62 +1,81 @@
 package org.sopt.sample.presentation.signup
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import org.sopt.sample.R
+import org.sopt.sample.data.repository.AuthRepositoryImpl
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.base.BindingActivity
-import org.sopt.sample.presentation.login.LoginActivity
-import org.sopt.sample.presentation.model.UserData
-import org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel
+import org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel
+import org.sopt.sample.presentation.util.AuthViewModelFactory
 import org.sopt.sample.presentation.util.makeSnackbar
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
 
-    private val signUpViewModel: SingUpViewModel by viewModels()
+    private lateinit var signUpViewModel: SignUpViewModel
+    private val authRepository = AuthRepositoryImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         binding.lifecycleOwner = this
+        val factory = AuthViewModelFactory(authRepository)
+        signUpViewModel = ViewModelProvider(this, factory)[SignUpViewModel::class.java]
         binding.viewmodel = signUpViewModel
         addObserve()
     }
 
-    private fun addObserve() { //button 이 enabled되고 그 이후 click되면 finish
-        signUpViewModel.success.observe(this) {
+    private fun addObserve() {
+        // 경고문구에 따라서 경고창 visible 및 edittext tint 변경
+        signUpViewModel.userId.observe(this) {
+            with(binding) {
+                checkCondition(
+                    tvWarnId,
+                    etId,
+                    viewmodel!!.activationId.value,
+                    viewmodel!!.userId.value
+                )
+            }
+        }
+
+        signUpViewModel.userPw.observe(this) {
+            with(binding) {
+                checkCondition(
+                    tvWarnPw,
+                    etPw,
+                    viewmodel!!.activationPw.value,
+                    viewmodel!!.userPw.value
+                )
+            }
+        }
+
+        signUpViewModel.success.observe(this) {//button 이 enabled되고 그 이후 click되면 finish
             if (it) finish()
-            else binding.root.makeSnackbar("서버통신실패!")
+            else binding.root.makeSnackbar("회원가입에 실패하였습니다.")
         }
     }
 
-    private fun noLiveData() { // 라이브 데이터를 사용하지 않았을때의 동작
-        val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-        binding.apply {
-
-            btnSignUp.setOnClickListener {
-                if (etId.text.length in 6..10 && etPw.text.length in 8..12) { //회원가입 조건 ID 6~10 / 비밀번호 8~12
-                    intent.apply {
-                        putExtra( //UserData 형태로 Intent 전달
-                            "userdata",
-                            UserData(
-                                etId.text.toString(),
-                                etPw.text.toString(),
-                                etName.text.toString()
-                            )
-                        )
-                    }
-                    setResult(RESULT_OK, intent)
-                    finish()
-                } else {
-                    Snackbar.make(binding.root, "회원가입이 불가 합니다..", Snackbar.LENGTH_SHORT).apply {
-                        anchorView = binding.btnSignUp
-                    }.show()
-
-                }
+    private fun checkCondition(
+        warnText: TextView,
+        editText: EditText,
+        activation: Boolean?,
+        input: String?
+    ) {
+        if (!(input.isNullOrEmpty())) { // 버튼 enabled에 userValue
+            // 경고문자 활성화 함수, 패턴만족 및 글자수 까지 검사하여 패턴만족 + 글자 있음 일때만 경고창 출력
+            if (activation == true) {
+                warnText.visibility = View.GONE
+                editText.background.setTint(this.getColor(R.color.gray))
+            } else {
+                warnText.visibility = View.VISIBLE
+                editText.background.setTint(this.getColor(R.color.red))
             }
+        } else {
+            warnText.visibility = View.GONE
+            editText.background.setTint(this.getColor(R.color.gray))
         }
     }
 

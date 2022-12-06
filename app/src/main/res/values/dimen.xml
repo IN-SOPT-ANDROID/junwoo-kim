@@ -4,6 +4,8 @@
     <dimen name="app_margin_32">32dp</dimen>
     <dimen name="app_margin_24">24dp</dimen>
     <dimen name="app_margin_12">12dp</dimen>
+    <dimen name="app_margin_6">6dp</dimen>
+
     <dimen name="radius_8">8dp</dimen>
 
     <dimen name="text_font_26">26sp</dimen>

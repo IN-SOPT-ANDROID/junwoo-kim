@@ -7,24 +7,14 @@
 
         <variable
             name="viewmodel"
-            type="org.sopt.sample.presentation.signup.viewmodel.SingUpViewModel" />
+            type="org.sopt.sample.presentation.signup.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+        android:animateLayoutChanges="true"
         tools:context=".presentation.signup.SignUpActivity">
-
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/SignUp_TextView_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_id"
@@ -33,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="@string/id"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/et_id"
@@ -47,13 +37,23 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_id" />
 
         <TextView
+            android:id="@+id/tv_warn_id"
+            style="@style/SignUp_TextView_warn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_warn_id"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/et_id"
+            app:layout_constraintTop_toBottomOf="@+id/et_id" />
+
+        <TextView
             android:id="@+id/tv_pw"
             style="@style/SignUp_TextView_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pw"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_id" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_warn_id" />
 
         <EditText
             android:id="@+id/et_pw"
@@ -61,10 +61,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_pw"
+            android:inputType="textPassword"
             android:onTextChanged="@{viewmodel::onPwTextChanged}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_pw" />
+
+        <TextView
+            android:id="@+id/tv_warn_pw"
+            style="@style/SignUp_TextView_warn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_warn_pw"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/et_pw"
+            app:layout_constraintTop_toBottomOf="@id/et_pw" />
+
 
         <TextView
             android:id="@+id/tv_name"
@@ -73,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="@string/name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_pw" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_warn_pw" />
 
 
         <EditText

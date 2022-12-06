@@ -11,8 +11,7 @@ import org.sopt.sample.presentation.home.fragment.GalleryFragment
 import org.sopt.sample.presentation.home.fragment.HomeFragment
 import org.sopt.sample.presentation.home.fragment.SearchFragment
 import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
-import org.sopt.sample.presentation.home.viewmodel.ReqresListViewModelFactory
-import org.sopt.sample.presentation.model.UserData
+import org.sopt.sample.presentation.home.viewmodel.HomeViewModelFactory
 
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -20,12 +19,10 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private val reqresRepository = ReqresRepositoryImpl()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        val factory = ReqresListViewModelFactory(reqresRepository)
+        binding.lifecycleOwner = this
+        val factory = HomeViewModelFactory(reqresRepository)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         //getResult() seminar 3까지만 사용
         init()
@@ -62,16 +59,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             .replace(R.id.container_home, fragment)
             .commit()
         return true
-    }
-
-    private fun getResult() { // LoginActivity가 보낸 intent 수신
-        val userData = //getParcelableExtra 함수 deprecated 대처
-            if (android.os.Build.VERSION.SDK_INT >= 33)
-                intent.getParcelableExtra("userdata", UserData::class.java)!!
-            else
-                intent.getParcelableExtra("userdata")!!
-        binding.userdata = userData // 데이터바인딩
-        homeViewModel.setUserData(userData) // 뷰모델에서의 Data set
     }
 
 }
