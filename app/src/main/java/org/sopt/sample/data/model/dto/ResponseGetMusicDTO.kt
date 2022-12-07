@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseMusicDTO(
+data class ResponseGetMusicDTO(
     @SerialName("statusCode")
     val statusCode: Int, // 200
     @SerialName("success")

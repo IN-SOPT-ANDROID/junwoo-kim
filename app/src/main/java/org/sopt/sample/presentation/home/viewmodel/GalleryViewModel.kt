@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.sample.data.model.dto.ResponseMusicDTO
+import org.sopt.sample.data.model.dto.ResponseGetMusicDTO
 import org.sopt.sample.domain.repository.MusicRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class GalleryViewModel @Inject constructor(private val musicRepository: MusicRep
         getMusicList()
     }
 
-    private val _musicList = MutableLiveData<List<ResponseMusicDTO.MusicData>>()
+    private val _musicList = MutableLiveData<List<ResponseGetMusicDTO.MusicData>>()
     val musicList get() = _musicList
 
 
