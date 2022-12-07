@@ -2,6 +2,7 @@ package org.sopt.sample.presentation.home.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import coil.load
@@ -19,7 +20,7 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
     }
 
     private val homeViewModel: HomeViewModel by activityViewModels()
-    private val launcher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val launcher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         binding.ivImg.load(it)
     }
 
@@ -27,7 +28,7 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
         super.onViewCreated(view, savedInstanceState)
         binding.viewmodel = homeViewModel
         binding.btnImage.setOnClickListener {
-            launcher.launch("image/*")
+            launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
     }
