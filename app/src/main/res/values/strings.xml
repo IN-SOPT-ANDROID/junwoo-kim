@@ -26,6 +26,8 @@
     <string name="home_empty">리스트 데이터가 없어요!</string>
     <string name="fail_emoji">😵‍</string>
     <string name="btn_fail">재시도</string>
+    <string name="upload">업로드</string>
+    <string name="post">전송</string>
     <string name="home_fragment">HomeFragment</string>
     <string name="search_fragment">SearchFragment</string>
     <string name="gallery_fragment">GalleryFragment</string>
