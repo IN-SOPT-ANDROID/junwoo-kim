@@ -13,10 +13,10 @@ data class ResponseMusicDTO(
     @SerialName("message")
     val message: String, // 음악 리스트 조회에 성공했습니다.
     @SerialName("data")
-    val `data`: List<Data>
+    val `data`: List<MusicData>
 ) {
     @Serializable
-    data class Data(
+    data class MusicData(
         @SerialName("id")
         val id: Int, // 1
         @SerialName("image")
