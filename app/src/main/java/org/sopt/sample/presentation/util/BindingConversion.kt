@@ -7,7 +7,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import coil.load
+import coil.transform.CircleCropTransformation
 import org.sopt.sample.R
 
 @BindingAdapter("app:textView_touch_gitItem")
@@ -32,25 +33,21 @@ fun ConstraintLayout.layouttouch(selected: Boolean) {
 @BindingAdapter("app:profile_load")
 fun ImageView.loadprofile(url: String) {
     if (url == "") {
-        GlideApp.with(context)
-            .load(R.drawable.ic_github)
-            .circleCrop()
-            .into(this)
-
+        this.load(R.drawable.ic_github) {
+            transformations(CircleCropTransformation())
+        }
     } else {
-        GlideApp.with(context)
-            .load(url)
-            .circleCrop()
-            .error(R.drawable.ic_github)
-            .into(this)
+        this.load(url) {
+            transformations(CircleCropTransformation())
+            error(R.drawable.ic_github)
+        }
     }
 }
 
 @BindingAdapter("app:reqres_profile_load")
 fun ImageView.loadreqresprofile(url: String) {
-    Glide.with(context)
-        .load(url)
-        .error(R.drawable.ic_image_not_supported)
-        .into(this)
+    this.load(url) {
+        error(R.drawable.ic_image_not_supported)
+    }
 }
 
