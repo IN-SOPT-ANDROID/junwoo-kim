@@ -12,11 +12,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
         <ImageView
             android:id="@+id/iv_album"
-            android:layout_width="130dp"
+            android:layout_width="110dp"
             android:layout_height="150dp"
             app:coil_load="@{music.image}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,8 +30,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{music.title}"
-            android:layout_marginStart="@dimen/app_margin_12"
-            app:layout_constraintStart_toStartOf="@+id/iv_album"
+            android:textAppearance="@style/SignUp_TextView_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_album"
             tools:text="Title" />
 
@@ -39,9 +41,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{music.singer}"
-            android:layout_marginEnd="@dimen/app_margin_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_album"
+            android:textAppearance="@style/SignUp_TextView_subtitle"
+            android:textSize="@dimen/text_font_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             tools:text="Singer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import coil.load
 import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import org.sopt.sample.R
 
 @BindingAdapter("app:textView_touch_gitItem")
@@ -48,6 +49,7 @@ fun ImageView.loadprofile(url: String) {
 fun ImageView.loadCoil(url: String) {
     this.load(url) {
         error(R.drawable.ic_image_not_supported)
+        RoundedCornersTransformation(6.0f, 6.0f, 6.0f, 6.0f)
     }
 }
 
