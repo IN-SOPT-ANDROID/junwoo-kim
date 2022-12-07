@@ -13,6 +13,8 @@ import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.adapter.MusicAdapter
 import org.sopt.sample.presentation.home.viewmodel.GalleryViewModel
 import org.sopt.sample.presentation.util.ContentUriRequestBody
+import org.sopt.sample.presentation.util.makeSnackbar
+import org.sopt.sample.presentation.util.stringOf
 
 @AndroidEntryPoint
 class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
@@ -30,10 +32,12 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewmodel = galleryViewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.btnUpload.setOnClickListener {
-            launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        with(binding) {
+            viewmodel = galleryViewModel
+            lifecycleOwner = viewLifecycleOwner
+            btnUpload.setOnClickListener {
+                launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
         }
         setAdapter()
         addObserve()
@@ -45,8 +49,16 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
     }
 
     private fun addObserve() {
-        galleryViewModel.musicList.observe(viewLifecycleOwner) {
-            musicAdapter.submitList(it)
+        with(galleryViewModel) {
+            musicList.observe(viewLifecycleOwner) {
+                musicAdapter.submitList(it.reversed())
+            }
+            success.observe(viewLifecycleOwner) {
+                if (it) { // 성공시 스낵바 및 리스트 갱신
+                    binding.root.makeSnackbar(requireContext().stringOf(R.string.upload_success))
+                    getMusicList()
+                } else binding.root.makeSnackbar(requireContext().stringOf(R.string.upload_fail))
+            }
         }
     }
 }

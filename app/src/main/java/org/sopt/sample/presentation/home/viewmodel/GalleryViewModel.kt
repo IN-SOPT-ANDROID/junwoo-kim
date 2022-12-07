@@ -21,15 +21,19 @@ class GalleryViewModel @Inject constructor(private val musicRepository: MusicRep
         getMusicList()
     }
 
+    //music List from api
     private val _musicList = MutableLiveData<List<ResponseGetMusicDTO.MusicData>>()
     val musicList get() = _musicList
 
+    //post success
+    private val _success = MutableLiveData<Boolean>()
+    val success: LiveData<Boolean> get() = _success
+
+    //data
     private val _title = MutableLiveData<String>()
     val title get() = _title
-
     private val _singer = MutableLiveData<String>()
     val singer get() = _singer
-
     private val _image = MutableLiveData<ContentUriRequestBody>()
     val image: LiveData<ContentUriRequestBody> get() = _image
 
@@ -61,14 +65,10 @@ class GalleryViewModel @Inject constructor(private val musicRepository: MusicRep
                     )
                 )
             }.onSuccess {
-                if (it.statusCode == 201) {
-                    //TODO SUCCESS 하나 추가해서 스낵바 띄우고 어댑터 새로고침
-                    Timber.d(it.toString())
-                } else {
-                    Timber.e(it.toString())
-                }
+                _success.value = it.statusCode == 201
             }.onFailure {
                 Timber.e(it)
+                _success.value = false
             }
         }
     }
