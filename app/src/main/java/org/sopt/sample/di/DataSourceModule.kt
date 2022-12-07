@@ -15,8 +15,8 @@ import org.sopt.sample.application.Util.Constant
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 object DataSourceModule {
 
     private fun provideOkHttpClient(interceptor: AppInterceptor): OkHttpClient =
@@ -40,14 +40,15 @@ object DataSourceModule {
             .addConverterFactory(Json.asConverterFactory(Constant.APPLICATION_JSON.toMediaType()))
             .build()
 
-    @Provides
     @Singleton
+    @Provides
     fun provideLoginService(): AuthService {
         return soptRetrofit.create(AuthService::class.java)
     }
 
-    @Provides
+
     @Singleton
+    @Provides
     fun provideReqresService(): ReqresApi {
         return reqresRetrofit.create(ReqresApi::class.java)
     }
