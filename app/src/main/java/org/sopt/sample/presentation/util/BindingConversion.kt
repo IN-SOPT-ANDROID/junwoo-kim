@@ -44,8 +44,8 @@ fun ImageView.loadprofile(url: String) {
     }
 }
 
-@BindingAdapter("app:reqres_profile_load")
-fun ImageView.loadreqresprofile(url: String) {
+@BindingAdapter("app:coil_load")
+fun ImageView.loadCoil(url: String) {
     this.load(url) {
         error(R.drawable.ic_image_not_supported)
     }

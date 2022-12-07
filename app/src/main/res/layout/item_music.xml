@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="music"
+            type="org.sopt.sample.data.model.dto.ResponseGetMusicDTO.MusicData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_album"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            app:coil_load="@{music.image}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_github" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{music.title}"
+            android:layout_marginStart="@dimen/app_margin_12"
+            app:layout_constraintStart_toStartOf="@+id/iv_album"
+            app:layout_constraintTop_toBottomOf="@+id/iv_album"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/tv_singer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{music.singer}"
+            android:layout_marginEnd="@dimen/app_margin_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_album"
+            tools:text="Singer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
