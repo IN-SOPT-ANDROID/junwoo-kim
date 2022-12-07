@@ -1,8 +1,8 @@
 package org.sopt.sample.data.repository
 
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.sopt.sample.data.datasource.MusicService
-import org.sopt.sample.data.model.dto.RequestPostMusic
 import org.sopt.sample.data.model.dto.ResponseGetMusicDTO
 import org.sopt.sample.data.model.dto.ResponsePostMusicDTO
 import org.sopt.sample.domain.repository.MusicRepository
@@ -16,9 +16,9 @@ class MusicRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postMusic(
-        map: HashMap<String, RequestPostMusic>,
-        image: MultipartBody.Part
+        image: MultipartBody.Part?,
+        request: HashMap<String, RequestBody>,
     ): ResponsePostMusicDTO {
-        return musicService.postMusic(map, image)
+        return musicService.postMusic(image, request)
     }
 }

@@ -34,4 +34,4 @@ fun Context.colorOf(@ColorRes resId: Int) = ContextCompat.getColor(this, resId)
 
 fun Context.drawableOf(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)
 
-fun String.toRequestBody() = toString().toRequestBody("text/plain".toMediaTypeOrNull())
+fun String.toRequestBody() = toString().toRequestBody("application/json".toMediaTypeOrNull())

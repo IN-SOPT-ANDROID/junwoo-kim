@@ -14,7 +14,7 @@ interface MusicService {
     @Multipart
     @POST("music")
     suspend fun postMusic(
-        @PartMap body: HashMap<String, RequestPostMusic>,
-        @Part file: MultipartBody.Part
+        @Part image: MultipartBody.Part?,
+        @PartMap request: HashMap<String, RequestBody>
     ): ResponsePostMusicDTO
 }

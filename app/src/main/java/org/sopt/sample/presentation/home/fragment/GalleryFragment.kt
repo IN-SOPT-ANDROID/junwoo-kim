@@ -11,6 +11,7 @@ import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentGalleryBinding
 import org.sopt.sample.presentation.base.BindingFragment
 import org.sopt.sample.presentation.home.viewmodel.GalleryViewModel
+import org.sopt.sample.presentation.util.ContentUriRequestBody
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -23,13 +24,14 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
     private val galleryViewModel: GalleryViewModel by viewModels()
     private val launcher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         binding.ivImg.load(it)
+        galleryViewModel.setImageBody(ContentUriRequestBody(requireContext(),it!!))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewmodel = galleryViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.btnImage.setOnClickListener {
+        binding.btnUpload.setOnClickListener {
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         galleryViewModel.musicList.observe(viewLifecycleOwner){
