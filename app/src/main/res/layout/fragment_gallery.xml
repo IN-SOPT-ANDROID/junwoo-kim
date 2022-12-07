@@ -17,28 +17,23 @@
         android:layout_height="match_parent"
         tools:context=".presentation.home.fragment.GalleryFragment">
 
-        <TextView
-            android:id="@+id/tv_id"
-            style="@style/SignUp_TextView_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{@string/viewmodel_id(viewmodel.userData.id)}"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="200dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            style="@style/SignUp_TextView_title"
+        <Button
+            android:id="@+id/btn_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/viewmodel_mbti(viewmodel.userData.mbti)}"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_id" />
+            android:text="이미지"
+            app:layout_constraintEnd_toEndOf="@+id/iv_img"
+            app:layout_constraintStart_toStartOf="@+id/iv_img"
+            app:layout_constraintTop_toBottomOf="@+id/iv_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
