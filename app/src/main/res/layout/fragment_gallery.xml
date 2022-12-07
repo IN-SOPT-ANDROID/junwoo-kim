@@ -18,10 +18,11 @@
 
         <ImageView
             android:id="@+id/iv_img"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,6 +52,7 @@
             android:id="@+id/btn_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
             android:text="@string/upload"
             app:layout_constraintEnd_toStartOf="@+id/btn_post"
             app:layout_constraintStart_toStartOf="@+id/iv_img"
@@ -60,11 +62,25 @@
             android:id="@+id/btn_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:onClick="@{()->viewmodel.postMusic()}"
             android:text="@string/post"
             app:layout_constraintEnd_toEndOf="@+id/iv_img"
             app:layout_constraintStart_toEndOf="@+id/btn_upload"
             app:layout_constraintTop_toBottomOf="@+id/et_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_music"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_upload"
+            app:spanCount="3"
+            tools:listitem="@layout/item_music" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

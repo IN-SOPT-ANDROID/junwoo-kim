@@ -10,9 +10,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentGalleryBinding
 import org.sopt.sample.presentation.base.BindingFragment
+import org.sopt.sample.presentation.home.adapter.MusicAdapter
 import org.sopt.sample.presentation.home.viewmodel.GalleryViewModel
 import org.sopt.sample.presentation.util.ContentUriRequestBody
-import timber.log.Timber
 
 @AndroidEntryPoint
 class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
@@ -24,8 +24,9 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
     private val galleryViewModel: GalleryViewModel by viewModels()
     private val launcher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         binding.ivImg.load(it)
-        galleryViewModel.setImageBody(ContentUriRequestBody(requireContext(),it!!))
+        galleryViewModel.setImageBody(ContentUriRequestBody(requireContext(), it!!))
     }
+    private lateinit var musicAdapter: MusicAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,9 +35,18 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
         binding.btnUpload.setOnClickListener {
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
-        galleryViewModel.musicList.observe(viewLifecycleOwner){
-            Timber.e(it.toString())
-        }
+        setAdapter()
+        addObserve()
+    }
 
+    private fun setAdapter() {
+        musicAdapter = MusicAdapter(requireContext())
+        binding.rcvMusic.adapter = musicAdapter
+    }
+
+    private fun addObserve() {
+        galleryViewModel.musicList.observe(viewLifecycleOwner) {
+            musicAdapter.submitList(it)
+        }
     }
 }
