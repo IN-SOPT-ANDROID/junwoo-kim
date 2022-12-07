@@ -21,6 +21,11 @@ class GalleryViewModel @Inject constructor(private val musicRepository: MusicRep
     private val _musicList = MutableLiveData<List<ResponseGetMusicDTO.MusicData>>()
     val musicList get() = _musicList
 
+    private val _title = MutableLiveData<String>()
+    val title get() = _title
+
+    private val _singer = MutableLiveData<String>()
+    val singer get() = _singer
 
     fun getMusicList() {
         viewModelScope.launch {
