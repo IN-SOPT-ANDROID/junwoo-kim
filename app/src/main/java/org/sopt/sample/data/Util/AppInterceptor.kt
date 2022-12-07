@@ -1,4 +1,4 @@
-package org.sopt.sample.application
+package org.sopt.sample.data.Util
 
 import okhttp3.Interceptor
 import okhttp3.Response

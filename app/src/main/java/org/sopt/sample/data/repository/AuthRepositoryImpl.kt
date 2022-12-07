@@ -1,6 +1,6 @@
 package org.sopt.sample.data.repository
 
-import org.sopt.sample.application.AuthService
+import org.sopt.sample.data.datasource.AuthService
 import org.sopt.sample.data.model.dto.RequestLoginDTO
 import org.sopt.sample.data.model.dto.RequestSingUpDTO
 import org.sopt.sample.data.model.dto.ResponseLoginDTO

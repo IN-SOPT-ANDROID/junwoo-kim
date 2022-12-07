@@ -1,6 +1,6 @@
 package org.sopt.sample.data.repository
 
-import org.sopt.sample.application.ReqresApi
+import org.sopt.sample.data.datasource.ReqresApi
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.domain.repository.ReqresRepository
 import retrofit2.Response
