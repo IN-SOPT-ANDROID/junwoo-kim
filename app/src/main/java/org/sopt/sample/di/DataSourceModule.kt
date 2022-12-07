@@ -8,11 +8,11 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import org.sopt.sample.data.Util.AppInterceptor
+import org.sopt.sample.data.util.AppInterceptor
+import org.sopt.sample.data.util.Constant
 import org.sopt.sample.data.datasource.AuthService
-import org.sopt.sample.data.datasource.ReqresApi
-import org.sopt.sample.data.Util.Constant
 import org.sopt.sample.data.datasource.MusicService
+import org.sopt.sample.data.datasource.ReqresApi
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -53,7 +53,6 @@ object DataSourceModule {
     fun provideLoginService(): AuthService {
         return soptRetrofit.create(AuthService::class.java)
     }
-
 
     @Singleton
     @Provides

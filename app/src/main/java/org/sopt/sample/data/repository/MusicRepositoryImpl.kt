@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class MusicRepositoryImpl @Inject constructor(
     private val musicService: MusicService
-): MusicRepository{
+) : MusicRepository {
     override suspend fun getMusicList(): ResponseMusicDTO {
         return musicService.getMusicList()
     }

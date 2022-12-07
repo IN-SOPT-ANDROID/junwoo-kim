@@ -1,4 +1,4 @@
-package org.sopt.sample.data.Util
+package org.sopt.sample.data.util
 
 object Constant {
     const val SOPT_BAST_URL = "http://3.39.169.52:3000/"
