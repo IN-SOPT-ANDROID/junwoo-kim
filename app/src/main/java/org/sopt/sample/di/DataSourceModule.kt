@@ -12,6 +12,7 @@ import org.sopt.sample.data.Util.AppInterceptor
 import org.sopt.sample.data.datasource.AuthService
 import org.sopt.sample.data.datasource.ReqresApi
 import org.sopt.sample.data.Util.Constant
+import org.sopt.sample.data.datasource.MusicService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -40,6 +41,13 @@ object DataSourceModule {
             .addConverterFactory(Json.asConverterFactory(Constant.APPLICATION_JSON.toMediaType()))
             .build()
 
+    private val musicRetrofit =
+        Retrofit.Builder()
+            .baseUrl(Constant.SOPT_MUSIC_BAST_URL)
+            .client(provideOkHttpClient(AppInterceptor()))
+            .addConverterFactory(Json.asConverterFactory(Constant.APPLICATION_JSON.toMediaType()))
+            .build()
+
     @Singleton
     @Provides
     fun provideLoginService(): AuthService {
@@ -53,5 +61,10 @@ object DataSourceModule {
         return reqresRetrofit.create(ReqresApi::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideMusicService(): MusicService {
+        return musicRetrofit.create(MusicService::class.java)
+    }
 
 }
