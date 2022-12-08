@@ -37,19 +37,13 @@ class SignUpViewModel @Inject constructor(private val authRepository: AuthReposi
     val success: LiveData<Boolean> get() = _success
 
 
-    fun onIDTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { // 영어,숫자 포함 6~10 글자
-        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}$")
-        _activationId.value = pattern.matcher(s).find()
+    fun onIDTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        _activationId.value = idPattern.matcher(s).find()
         _userId.value = s.toString()
     }
 
-    fun onPwTextChanged(
-        s: CharSequence, start: Int, before: Int, count: Int
-    ) {
-        // 영어,숫자,특수문자 포함 6~12 글자
-        val pattern =
-            Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
-        _activationPw.value = pattern.matcher(s).find()
+    fun onPwTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        _activationPw.value = pwPattern.matcher(s).find()
         _userPw.value = s.toString()
     }
 
@@ -73,4 +67,14 @@ class SignUpViewModel @Inject constructor(private val authRepository: AuthReposi
             }
         }
     }
+
+    companion object {
+        // 영어,숫자 포함 6~10 글자
+        val idPattern: Pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}$")
+
+        // 영어,숫자,특수문자 포함 6~12 글자
+        val pwPattern: Pattern =
+            Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
+    }
+
 }
