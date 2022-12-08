@@ -13,11 +13,10 @@ class SharedPrefRepositoryImpl @Inject constructor(private val sharedPreferences
     }
 
     @SuppressLint("CommitPrefEdits")
-    override fun setLoginInfo(id: String, pw: String, name: String) {
+    override fun setLoginInfo(id: String, pw: String) {
         sharedPreferences.edit().apply {
             putString(Constant.PREF_ID, id)
             putString(Constant.PREF_PW, pw)
-            putString(Constant.PREF_NAME, name)
         }.apply()
     }
 }

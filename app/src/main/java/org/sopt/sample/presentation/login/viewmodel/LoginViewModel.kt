@@ -9,12 +9,16 @@ import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.RequestLoginDTO
 import org.sopt.sample.data.model.dto.ResponseLoginDTO
 import org.sopt.sample.domain.repository.AuthRepository
+import org.sopt.sample.domain.repository.SharedPrefRepository
 import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val authRepository: AuthRepository) :ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val authRepository: AuthRepository,
+    private val sharedPrefRepository: SharedPrefRepository
+) : ViewModel() {
     //server connect
     private val _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean> get() = _success
@@ -28,16 +32,27 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
     private val _userPw = MutableLiveData<String>()
     val userPw get() = _userPw
 
+    //login
+    private val _login = MutableLiveData<Boolean>()
+    val login get() = _login
+
+    init { // 로그인 검사
+        _login.value = sharedPrefRepository.checkLogin()
+    }
+
     fun onPostLogin() {
         viewModelScope.launch {
-           kotlin.runCatching {
+            kotlin.runCatching {
                 authRepository.postLogin(
                     RequestLoginDTO(
                         userId.value ?: "", userPw.value ?: ""
                     )
                 )
-            }.onSuccess {  value: Response<ResponseLoginDTO> ->
+            }.onSuccess { value: Response<ResponseLoginDTO> ->
                 _success.value = value.isSuccessful
+                sharedPrefRepository.setLoginInfo(
+                    userId.value ?: "", userPw.value ?: ""
+                )
             }.onFailure {
                 Timber.e(it)
                 _error.value = true

@@ -3,6 +3,7 @@ package org.sopt.sample.application
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import org.sopt.sample.BuildConfig
+import org.sopt.sample.di.SharedPreferenceModule
 import timber.log.Timber
 
 @HiltAndroidApp

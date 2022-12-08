@@ -18,13 +18,13 @@ import org.sopt.sample.presentation.login.viewmodel.LoginViewModel
 import org.sopt.sample.presentation.model.UserData
 import org.sopt.sample.presentation.signup.SignUpActivity
 import org.sopt.sample.presentation.util.makeSnackbar
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private lateinit var getResultInfo: ActivityResultLauncher<Intent>
     private lateinit var userData: UserData
-    private lateinit var authPreferences: SharedPreferences
 
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -35,17 +35,23 @@ class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activ
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        authPreferences = getSharedPreferences("autologin", Activity.MODE_PRIVATE)
 
         binding.lifecycleOwner = this
         binding.viewmodel = loginViewModel
-
-        //authPreferenceCheck()
         addObserve()
         singUpListener()
     }
 
     private fun addObserve() {
+        loginViewModel.login.observe(this){ //SharedPerference를 통해 이전 로그인 기록 검사
+            if(it){
+                startActivity(
+                    Intent(this@LoginActivity, HomeActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
+            }
+        }
+
         loginViewModel.success.observe(this) { //로그인 성공되면 자동으로 Home이동
             if (it) {
                 startActivity(
@@ -76,18 +82,6 @@ class LoginActivity : BindingSplashActivity<ActivityLoginBinding>(R.layout.activ
                                 it.data!!.getParcelableExtra("userdata")!!
                     }
                 }
-        }
-    }
-
-    private fun authPreferenceCheck() { // SharedPreference 체크 함수
-        if (authPreferences.getString("id", null) != null) {
-            userData = UserData(
-                authPreferences.getString("id", null).toString(),
-                authPreferences.getString("pw", null).toString(),
-                authPreferences.getString("mbti", null).toString(),
-            )
-            // 이전 로그인 기록이 있을 경우 바로 HomeActivity로 이동
-            startHomeActivity(userData)
         }
     }
 

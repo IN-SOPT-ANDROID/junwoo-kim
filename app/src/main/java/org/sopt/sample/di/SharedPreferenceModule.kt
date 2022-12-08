@@ -1,4 +1,4 @@
-package org.sopt.sample.application
+package org.sopt.sample.di
 
 import android.content.Context
 import android.content.SharedPreferences
