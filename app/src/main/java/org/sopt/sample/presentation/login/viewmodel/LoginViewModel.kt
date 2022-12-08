@@ -24,23 +24,9 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
     //text
     private val _userId = MutableLiveData<String>()
-    val userId: LiveData<String> get() = _userId
+    val userId get() = _userId
     private val _userPw = MutableLiveData<String>()
-    val userPw: LiveData<String> get() = _userPw
-
-    fun onIDTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { // 영어,숫자 포함 6~10 글자
-//        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}$")
-//        _activationId.value = pattern.matcher(s).find()
-        _userId.value = s.toString()
-    }
-
-    fun onPwTextChanged(
-        s: CharSequence, start: Int, before: Int, count: Int) {
-        // 영어,숫자,특수문자 포함 6~12 글자
-//        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
-//        _activationPw.value = pattern.matcher(s).find()
-        _userPw.value = s.toString()
-    }
+    val userPw get() = _userPw
 
     fun onPostLogin() {
         viewModelScope.launch {
