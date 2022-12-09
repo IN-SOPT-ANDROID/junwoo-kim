@@ -9,6 +9,7 @@ interface MusicRepository {
     suspend fun getMusicList(): ResponseGetMusicDTO
     suspend fun postMusic(
         image: MultipartBody.Part?,
-        request: HashMap<String, RequestBody>,
-    ): ResponsePostMusicDTO
+        request: RequestBody,
+        //request: HashMap<String, RequestBody>,
+        ): ResponsePostMusicDTO
 }

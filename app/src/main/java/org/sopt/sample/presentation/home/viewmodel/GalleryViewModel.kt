@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.sopt.sample.data.model.dto.ResponseGetMusicDTO
 import org.sopt.sample.domain.repository.MusicRepository
 import org.sopt.sample.presentation.util.ContentUriRequestBody
@@ -60,9 +64,10 @@ class GalleryViewModel @Inject constructor(private val musicRepository: MusicRep
             kotlin.runCatching {
                 musicRepository.postMusic(
                     _image.value!!.toFormData(),
-                    hashMapOf( // key는 request value는 json 형태의 문자열
-                        "request" to "{\"singer\": \"${_singer.value}\",\"title\": \"${_title.value}\"}".toRequestBody()
-                    )
+                    RequestBody(_singer.value ?: "", _title.value ?: "")
+//                  hashMapOf( // key는 request value는 json 형태의 문자열
+//                  "request" to "{\"singer\": \"${_singer.value}\",\"title\": \"${_title.value}\"}".toRequestBody()
+//                  )
                 )
             }.onSuccess {
                 _success.value = it.statusCode == 201
@@ -73,4 +78,8 @@ class GalleryViewModel @Inject constructor(private val musicRepository: MusicRep
         }
     }
 
+    private fun RequestBody(singer :String, title:String) = buildJsonObject {
+        put("singer", singer)
+        put("title", title)
+    }.toString().toRequestBody("application/json".toMediaType())
 }

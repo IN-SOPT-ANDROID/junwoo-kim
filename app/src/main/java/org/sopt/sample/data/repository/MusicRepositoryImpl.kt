@@ -17,7 +17,8 @@ class MusicRepositoryImpl @Inject constructor(
 
     override suspend fun postMusic(
         image: MultipartBody.Part?,
-        request: HashMap<String, RequestBody>,
+        request: RequestBody,
+        //request: HashMap<String, RequestBody>,
     ): ResponsePostMusicDTO {
         return musicService.postMusic(image, request)
     }

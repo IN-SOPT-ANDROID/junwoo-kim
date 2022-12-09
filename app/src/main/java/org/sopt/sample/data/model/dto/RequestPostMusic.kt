@@ -6,8 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RequestPostMusic(
+    @SerialName("image")
+    val image: String,
     @SerialName("singer")
-    val singer: String, // BOL4
+    val singer: String,
     @SerialName("title")
-    val title: String // Seoul
+    val title: String
 )
