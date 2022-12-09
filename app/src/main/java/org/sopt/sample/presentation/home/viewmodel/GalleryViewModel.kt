@@ -14,6 +14,7 @@ import org.sopt.sample.data.model.dto.ResponseGetMusicDTO
 import org.sopt.sample.domain.repository.MusicRepository
 import org.sopt.sample.presentation.util.ContentUriRequestBody
 import org.sopt.sample.presentation.util.toRequestBody
+import retrofit2.http.Part
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -65,9 +66,13 @@ class GalleryViewModel @Inject constructor(private val musicRepository: MusicRep
                 musicRepository.postMusic(
                     _image.value!!.toFormData(),
                     RequestBody(_singer.value ?: "", _title.value ?: "")
-//                  hashMapOf( // key는 request value는 json 형태의 문자열
-//                  "request" to "{\"singer\": \"${_singer.value}\",\"title\": \"${_title.value}\"}".toRequestBody()
-//                  )
+                    // 이렇게 사용하려면 postMusic 함수에서
+                    // @Part("request") request: RequestBody 형태로 사용할 것
+
+                    // @PartMap request: HashMap<String, RequestBody>일때
+                    //hashMapOf( // key는 request value는 json 형태의 문자열
+                    //"request" to "{\"singer\": \"${_singer.value}\",\"title\": \"${_title.value}\"}".toRequestBody()
+                    //)
                 )
             }.onSuccess {
                 _success.value = it.statusCode == 201
