@@ -9,7 +9,7 @@ import javax.inject.Inject
 class SharedPrefRepositoryImpl @Inject constructor(private val sharedPreferences: SharedPreferences) :
     SharedPrefRepository {
     override fun checkLogin(): Boolean {
-        return (sharedPreferences.getString(Constant.PREF_ID, null) == null)
+        return (sharedPreferences.getString(Constant.PREF_ID, null) != null)
     }
 
     @SuppressLint("CommitPrefEdits")
