@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="org.sopt.sample.presentation.model.UserData"/>
 
         <variable
             name="viewmodel"
-            type="org.sopt.sample.presentation.home.viewmodel.HomeViewModel" />
+            type="org.sopt.sample.presentation.home.viewmodel.GalleryViewModel" />
 
     </data>
 
@@ -17,28 +16,71 @@
         android:layout_height="match_parent"
         tools:context=".presentation.home.fragment.GalleryFragment">
 
-        <TextView
-            android:id="@+id/tv_id"
-            style="@style/SignUp_TextView_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{@string/viewmodel_id(viewmodel.userData.id)}"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            style="@style/SignUp_TextView_title"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_singer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{@string/viewmodel_mbti(viewmodel.userData.mbti)}"
-            android:textSize="20sp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="15dp"
+            android:text="@={viewmodel.singer}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_id" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_img" />
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="15dp"
+            android:text="@={viewmodel.title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_singer" />
+
+        <Button
+            android:id="@+id/btn_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="@string/upload"
+            app:layout_constraintEnd_toStartOf="@+id/btn_post"
+            app:layout_constraintStart_toStartOf="@+id/iv_img"
+            app:layout_constraintTop_toBottomOf="@+id/et_title" />
+
+        <Button
+            android:id="@+id/btn_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:onClick="@{()->viewmodel.postMusic()}"
+            android:text="@string/post"
+            app:layout_constraintEnd_toEndOf="@+id/iv_img"
+            app:layout_constraintStart_toEndOf="@+id/btn_upload"
+            app:layout_constraintTop_toBottomOf="@+id/et_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_music"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_upload"
+            app:spanCount="3"
+            tools:listitem="@layout/item_music" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

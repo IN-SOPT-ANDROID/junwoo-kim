@@ -8,6 +8,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 
 fun View.makeSnackbar(messgae: String) {
     Snackbar.make(
@@ -31,3 +33,5 @@ fun Context.stringOf(@StringRes resId: Int) = getString(resId)
 fun Context.colorOf(@ColorRes resId: Int) = ContextCompat.getColor(this, resId)
 
 fun Context.drawableOf(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)
+
+fun String.toRequestBody() = toString().toRequestBody("application/json".toMediaTypeOrNull())

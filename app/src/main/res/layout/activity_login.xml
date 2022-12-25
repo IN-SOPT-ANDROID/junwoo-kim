@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_id"
-            android:onTextChanged="@{viewmodel::onIDTextChanged}"
+            android:text="@={viewmodel.userId}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_id" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_pw"
             android:inputType="textPassword"
-            android:onTextChanged="@{viewmodel::onPwTextChanged}"
+            android:text="@={viewmodel.userPw}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_pw" />

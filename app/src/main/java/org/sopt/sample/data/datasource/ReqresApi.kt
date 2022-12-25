@@ -1,4 +1,4 @@
-package org.sopt.sample.application
+package org.sopt.sample.data.datasource
 
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import retrofit2.Response

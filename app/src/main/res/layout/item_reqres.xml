@@ -45,7 +45,7 @@
                 android:id="@+id/imv_profile"
                 android:layout_width="@dimen/sub_base_140"
                 android:layout_height="@dimen/sub_base_140"
-                app:reqres_profile_load="@{reqres.avatar}" />
+                app:coil_load="@{reqres.avatar}" />
         </androidx.cardview.widget.CardView>
 
 

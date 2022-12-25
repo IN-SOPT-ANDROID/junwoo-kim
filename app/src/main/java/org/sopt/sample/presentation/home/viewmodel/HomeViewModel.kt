@@ -4,13 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.ResponseReqresListDTO
 import org.sopt.sample.domain.repository.ReqresRepository
 import org.sopt.sample.presentation.model.UserData
 import timber.log.Timber
+import javax.inject.Inject
 
-class HomeViewModel(private val reqresRepository: ReqresRepository) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val reqresRepository: ReqresRepository) : ViewModel() {
 
     init {
         connectReqres()

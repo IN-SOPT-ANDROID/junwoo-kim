@@ -1,29 +1,25 @@
 package org.sopt.sample.presentation.home
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
-import org.sopt.sample.data.repository.ReqresRepositoryImpl
 import org.sopt.sample.databinding.ActivityHomeBinding
 import org.sopt.sample.presentation.base.BindingActivity
 import org.sopt.sample.presentation.home.fragment.GalleryFragment
 import org.sopt.sample.presentation.home.fragment.HomeFragment
 import org.sopt.sample.presentation.home.fragment.SearchFragment
 import org.sopt.sample.presentation.home.viewmodel.HomeViewModel
-import org.sopt.sample.presentation.home.viewmodel.HomeViewModelFactory
 
+@AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
-    private lateinit var homeViewModel: HomeViewModel
-
-    private val reqresRepository = ReqresRepositoryImpl()
+    private val homeViewModel :HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
-        val factory = HomeViewModelFactory(reqresRepository)
-        homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         //getResult() seminar 3까지만 사용
         init()
         setBottomNav()

@@ -4,14 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.sample.data.model.dto.RequestLoginDTO
 import org.sopt.sample.data.model.dto.ResponseLoginDTO
 import org.sopt.sample.domain.repository.AuthRepository
+import org.sopt.sample.domain.repository.SharedPrefRepository
 import retrofit2.Response
 import timber.log.Timber
+import javax.inject.Inject
 
-class LoginViewModel(private val authRepository: AuthRepository) :ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val authRepository: AuthRepository,
+    private val sharedPrefRepository: SharedPrefRepository
+) : ViewModel() {
     //server connect
     private val _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean> get() = _success
@@ -21,34 +28,31 @@ class LoginViewModel(private val authRepository: AuthRepository) :ViewModel() {
 
     //text
     private val _userId = MutableLiveData<String>()
-    val userId: LiveData<String> get() = _userId
+    val userId get() = _userId
     private val _userPw = MutableLiveData<String>()
-    val userPw: LiveData<String> get() = _userPw
+    val userPw get() = _userPw
 
-    fun onIDTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { // 영어,숫자 포함 6~10 글자
-//        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}$")
-//        _activationId.value = pattern.matcher(s).find()
-        _userId.value = s.toString()
-    }
+    //login
+    private val _login = MutableLiveData<Boolean>()
+    val login get() = _login
 
-    fun onPwTextChanged(
-        s: CharSequence, start: Int, before: Int, count: Int) {
-        // 영어,숫자,특수문자 포함 6~12 글자
-//        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{6,12}$")
-//        _activationPw.value = pattern.matcher(s).find()
-        _userPw.value = s.toString()
+    init { // 로그인 검사
+        _login.value = sharedPrefRepository.checkLogin()
     }
 
     fun onPostLogin() {
         viewModelScope.launch {
-           kotlin.runCatching {
+            kotlin.runCatching {
                 authRepository.postLogin(
                     RequestLoginDTO(
                         userId.value ?: "", userPw.value ?: ""
                     )
                 )
-            }.onSuccess {  value: Response<ResponseLoginDTO> ->
+            }.onSuccess { value: Response<ResponseLoginDTO> ->
                 _success.value = value.isSuccessful
+                sharedPrefRepository.setLoginInfo(
+                    userId.value ?: "", userPw.value ?: ""
+                )
             }.onFailure {
                 Timber.e(it)
                 _error.value = true
